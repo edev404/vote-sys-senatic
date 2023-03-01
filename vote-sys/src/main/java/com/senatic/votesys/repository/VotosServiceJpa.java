@@ -3,10 +3,10 @@ package com.senatic.votesys.repository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import com.senatic.votesys.service.IAprendicesService;
+import com.senatic.votesys.service.IVotosService;
 
 @Service
 @Primary
-public class AprendicesRepository implements IAprendicesService{
+public class VotosServiceJpa implements IVotosService{
     
 }

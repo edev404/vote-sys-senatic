@@ -7,6 +7,6 @@ import com.senatic.votesys.service.IUsuariosService;
 
 @Service
 @Primary
-public class UsuariosRepository implements IUsuariosService{
+public class UsuariosServiceJpa implements IUsuariosService{
     
 }

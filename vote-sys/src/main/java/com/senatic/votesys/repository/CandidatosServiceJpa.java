@@ -7,6 +7,6 @@ import com.senatic.votesys.service.ICandidatosService;
 
 @Service
 @Primary
-public class CandidatosRepository implements ICandidatosService{
+public class CandidatosServiceJpa implements ICandidatosService{
     
 }

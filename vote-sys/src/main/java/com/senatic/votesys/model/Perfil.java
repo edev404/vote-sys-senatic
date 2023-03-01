@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="Perfiles")
+@Table(name="perfiles")
 public class Perfil {
 
     @Id

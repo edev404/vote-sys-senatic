@@ -4,3 +4,7 @@ input.form-control:focus {
     box-shadow: none;
     border: 0;
 }
+.dropdown-menu li a:active{
+    background-color: white !important;
+    color: black;
+}

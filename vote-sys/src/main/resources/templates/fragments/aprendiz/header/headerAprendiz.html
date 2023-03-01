@@ -1,12 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <title>Header Aprendiz</title>
-</head>
-<body>
-    
-</body>
+    </head>
+    <body>
+    <nav class="navbar bg-success p-3">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="#">
+                <img src="../../../../static/logo.png" alt="Logo del sitio de votaciones" width="60" height="50" class="d-inline-block align-text-top">
+            </a>
+
+            <ul class="nav justify-content-end">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Aprendices</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Agregar Aprendiz</a></li>
+                        <li><a class="dropdown-item" href="#">Agregar Aprendices</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#">Candidatos</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#">Votaciones</a>
+                </li>
+
+            </ul>
+            
+        </div>
+    </nav>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </body>
 </html>

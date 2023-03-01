@@ -14,18 +14,28 @@
 <body>
     <div class="container mt-5">
         <div class="row mb-3">
-            <div class="col-6">
-                <label for="search" class="form-label">Introduzca una ficha para visualizar los aprendices:</label>
-                <form class="form-inline my-2 my-lg-0 d-flex gap-3" method="get">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                </form>
-            </div>
+            <form class="form-inline my-2 my-lg-0 d-flex gap-3" method="get">
+
+                <div class="col-6">
+                    <label for="search" class="form-label">Introduzca una ficha para visualizar los aprendices:
+                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                    </label>
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+                </div>
+                <div class="col-6">
+                    <label for="search" class="form-label">Introduzca una cedula para visualizar los aprendices:
+                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                    </label>
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+                </div>
+            </form>
+
         </div>
         <table class="table table-hover table-bordered">
             <thead class="table-success text-center">
                 <tr>
-                    <th scope="col">Cedula</th>
+                    <!-- Agregar un identificador único a la columna que deseamoa filtrar. utilizaremos el identificador "cedula" para la columna cedula: -->
+                    <th scope="col" id="cedula">Cedula</th>
                     <!-- Agregar un identificador único a la columna que deseamoa filtrar. utilizaremos el identificador "ficha" para la columna Ficha: -->
                     <th scope="col" id="ficha">Ficha</th>
                     <th scope="col">Nombre</th>

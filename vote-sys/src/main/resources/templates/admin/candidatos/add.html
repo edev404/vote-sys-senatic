@@ -1,13 +1,73 @@
 <!-- Vista para la adición de candidatos -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add candidatos</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>add candidato</title>
 </head>
 <body>
-    
+
+    <div class="container mt-3 p-5">
+        <form>
+            <div class="row w-50 p-3 m-auto">
+        
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label class="form-label" for="select">Tipo de documento:</label>
+                        <select class="form-select" aria-label="Default select example" id="select">
+                            <option value="1">Cedula ciudadania</option>
+                            <option value="2">Tarjeta de identidad</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label class="form-label" for="ficha">Numero de documento:</label>
+                        <input type="number" class="form-control " id="ficha">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="form-label" for="photo">Foto del candidato:</label>
+                        <input type="file" class="form-control" id="photo">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="form-label" for="select">Votaciones:</label>
+                        <select class="form-select" aria-label="Default select example" id="select">
+                            <option value="1">Votacion 1</option>
+                            <option value="2">Votacion 2</option>
+                            <option value="3">Votacion 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label class="form-check-label" for="propuestas">Propuestas del candidato:</label>
+                        <textarea class="form-control auto-resize" id="propuestas" rows="3" cols="50"></textarea>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary rounded-pill">
+                        Agregar Candidato
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

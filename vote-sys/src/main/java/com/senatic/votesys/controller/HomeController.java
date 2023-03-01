@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     
     @GetMapping("/")
-    public String holaGitHub(){
-        return "holaGitHub";
+    public String redirectByRole(){
+        /*
+        Redirigir a la vista correspodiente basandose en el rol del usuario autenticado
+         */
+        return "";
     }
 
 }

@@ -31,7 +31,7 @@ public class VotacionesController {
         return "/admin/votaciones/add";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/save")
     public String saveVotacion(Votacion votacion, RedirectAttributes attributes){
         votacion.setEstado(EstadoVotacion.CREADA);
         votacionesService.addVotacion(votacion);

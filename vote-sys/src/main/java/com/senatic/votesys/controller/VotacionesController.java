@@ -32,7 +32,7 @@ public class VotacionesController {
     }
 
     @PostMapping("/save")
-    public String saveVotacion(Votacion votacion, RedirectAttributes attributes){
+    public String saveVotacion(Votacion votacion, RedirectAttributes attributes, Model model){
         votacion.setEstado(EstadoVotacion.CREADA);
         votacionesService.addVotacion(votacion);
         attributes.addFlashAttribute("msg", "Votación creada satisfactoriamente");

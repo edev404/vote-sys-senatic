@@ -4,6 +4,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.senatic.votesys.exception.CsvParsingException;
+import com.senatic.votesys.utils.FileHandler;
+
+import ch.qos.logback.core.model.Model;
 
 @Controller
 @RequestMapping("/aprendices")
@@ -20,8 +28,8 @@ public class AprendicesController {
         return "";
     }
 
-    @GetMapping("/create/upload")
-    public String createAprendicesByCSV(){
+    @PostMapping("/create/upload")
+    public String createAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes ra){
         /* 
         TO DO: 
         Recibir un MultipartFile y Obtener lista de aprendices
@@ -30,16 +38,23 @@ public class AprendicesController {
         Redirigir a vista de aprendices
         Enviar mensaje de confirmación
         */
+    	try {
+			FileHandler.csvToList(csvFile);
+			ra.addFlashAttribute("msg", "todos los registros guardados exitosamente");
+		} catch (CsvParsingException e) {
+			ra.addFlashAttribute("msg", "hubo errores al guardar los registros del documento CSV");
+		}
         return "redirect:/aprendices/view";
     }
 
     @GetMapping("/view")
-    public String viewAprendices(){
+    public String viewAprendices(Model model){
         //TO DO: Desplegar lista de aprendices en la vista
         /*
          Debe soportar paginación y ordenación por ficha
          Debe soportar busqueda By example por ficha
          */
+    	
         return "";
     }
 

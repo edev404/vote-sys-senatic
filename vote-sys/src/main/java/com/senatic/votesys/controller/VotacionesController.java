@@ -1,13 +1,23 @@
 package com.senatic.votesys.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.senatic.votesys.model.EstadoVotacion;
@@ -22,7 +32,29 @@ public class VotacionesController {
     private IVotacionesService votacionesService;
     
     @GetMapping("/view")
-    public String getVotaciones(Model model){
+    public String getVotaciones(@RequestParam(defaultValue = "0") Integer page,
+                                @RequestParam(defaultValue = "5") Integer size,
+                                Model model){
+        Pageable paging = PageRequest.of(page, size);
+        Page<Votacion> listVotaciones = votacionesService.getVotacionesPaginate(paging);
+        model.addAttribute("votaciones", listVotaciones);
+        return "/admin/votaciones/list";
+    }
+
+    @GetMapping("/search")
+    public String searchVotacion(@RequestParam("nombre") String nombre,
+                                @RequestParam("estado") String estado,
+                                @RequestParam(defaultValue = "0") Integer page,
+                                @RequestParam(defaultValue = "5") Integer size,
+                                Model model){
+        Votacion votacion = new Votacion();
+        votacion.setNombre(nombre);
+        votacion.setEstado(EstadoVotacion.valueOf(estado));
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("nombre", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase(true));
+        Pageable paging = PageRequest.of(page, size);
+        Example<Votacion> example = Example.of(votacion, matcher);
+        Page<Votacion> listVotaciones = votacionesService.getVotacionesPaginateByExample(paging, example);
+        model.addAttribute("votaciones", listVotaciones);
         return "/admin/votaciones/list";
     }
 
@@ -46,8 +78,15 @@ public class VotacionesController {
         return "redirect:/votaciones/view";
     }
 
+    // Convierte el null los string vacíos
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}
+
     @ModelAttribute
     public void setGenerics(Model model){
-        model.addAttribute("listVotaciones", votacionesService.getVotaciones());
+        model.addAttribute("votaciones", votacionesService.getVotaciones());
+        model.addAttribute("msg", "No se encontraron votaciones disponibles");
     }
 }

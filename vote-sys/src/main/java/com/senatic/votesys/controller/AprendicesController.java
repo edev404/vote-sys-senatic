@@ -28,8 +28,17 @@ public class AprendicesController {
         return "";
     }
 
+    @GetMapping("/create/upload")
+    public String createAprendicesByCSV(){
+        /*
+        TO DO:
+        Retornar vista para subir archivo
+         */
+        return "";
+    }
+
     @PostMapping("/create/upload")
-    public String createAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes ra){
+    public String saveAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes ra){
         /* 
         TO DO: 
         Recibir un MultipartFile y Obtener lista de aprendices

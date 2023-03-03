@@ -25,6 +25,9 @@ public class Candidato {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
+    @JoinColumn(name = "idAprendiz")
+    private Aprendiz aprendiz;
+    @OneToOne
     @JoinColumn(name="idImagen")
     private Imagen imagen;
     @OneToOne

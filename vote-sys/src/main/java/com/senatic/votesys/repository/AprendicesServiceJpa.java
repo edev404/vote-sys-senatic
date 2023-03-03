@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.senatic.votesys.model.Aprendiz;
-import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.model.dto.AprendizDTO;
 import com.senatic.votesys.repository.bd.AprendicesRepository;
 import com.senatic.votesys.service.IAprendicesService;
@@ -47,7 +46,8 @@ public class AprendicesServiceJpa implements IAprendicesService{
 		Aprendiz aprendiz = aprendicesRepo.getReferenceById(aprendizDTO.getId());
 		aprendiz.setId(aprendizDTO.getId());
 		aprendiz.setFichaPrograma(aprendizDTO.getFichaPrograma());
-		aprendiz.setTipoDocumento(aprendizDTO.getTipoDocumento);
+		aprendiz.setTipoDocumento(aprendizDTO.getTipoDocumento());
+		return true;
 	}
 	
 	

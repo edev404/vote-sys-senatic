@@ -1,6 +1,7 @@
 package com.senatic.votesys.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -16,7 +17,7 @@ import com.senatic.votesys.service.IVotacionesService;
 @Service
 @Primary
 public class VotacionesServiceJpa implements IVotacionesService{
-
+ 
     @Autowired
     private VotacionesRepository votacionesJpa;
 
@@ -44,5 +45,14 @@ public class VotacionesServiceJpa implements IVotacionesService{
     public Page<Votacion> getVotacionesPaginateByExample(Pageable paging, Example<Votacion> example) {
         return votacionesJpa.findAll(example, paging);
     }
-    
+
+    @Override
+    public Optional<Votacion> getVotacionById(Long idVotacion) {
+        return votacionesJpa.findById(idVotacion);
+    }
+
+    @Override
+    public void deleteVotacion(Votacion votacion) {
+        votacionesJpa.delete(votacion);
+    }
 }

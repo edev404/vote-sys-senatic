@@ -18,12 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.senatic.votesys.exception.CsvParsingException;
 import com.senatic.votesys.model.Aprendiz;
-import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.model.dto.AprendizDTO;
 import com.senatic.votesys.service.IAprendicesService;
 import com.senatic.votesys.utils.FileHandler;
 
-import ch.qos.logback.core.model.Model;
 
 @Controller
 @RequestMapping("/aprendices")

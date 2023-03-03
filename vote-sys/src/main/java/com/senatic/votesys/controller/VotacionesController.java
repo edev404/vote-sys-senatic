@@ -1,6 +1,8 @@
 package com.senatic.votesys.controller;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
@@ -58,6 +60,18 @@ public class VotacionesController {
         return "/admin/votaciones/list";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editVotacion(@PathVariable("id") Long idVotacion, Model model, RedirectAttributes attributes){
+        Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
+        if (optional.isPresent()) {
+            model.addAttribute("votacion", optional.get());
+            return "/admin/votaciones/add";
+        } else {
+            attributes.addFlashAttribute("msg", "No existe la votación que intenta editar");
+            return "redirect:/votaciones/view";
+        }
+    }
+
     @GetMapping("/create")
     public String createVotacion(Votacion votacion){
         return "/admin/votaciones/add";
@@ -67,14 +81,20 @@ public class VotacionesController {
     public String saveVotacion(Votacion votacion, RedirectAttributes attributes, Model model){
         votacion.setEstado(EstadoVotacion.CREADA);
         votacionesService.addVotacion(votacion);
-        attributes.addFlashAttribute("msg", "Votación creada satisfactoriamente");
+        attributes.addFlashAttribute("msg", "Votación guardada satisfactoriamente");
         return "redirect:/votaciones/view";
     }
 
+
     @GetMapping("/delete/{id}")
-    public String deleteVotacion(@PathVariable(name="id", required = true) Long idVotacion, RedirectAttributes attributes){
-        votacionesService.deleteById(idVotacion);
-        attributes.addFlashAttribute("msg", "Votación eliminada satisfactoriamente");
+    public String deleteVotacion(@PathVariable(name="id", required = true) Long idVotacion, RedirectAttributes attribute){
+        Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
+        if (optional.isPresent()) {
+            votacionesService.deleteVotacion(optional.get());
+            attribute.addFlashAttribute("msg", "Votación eliminada satisfactoriamente");
+        }else {
+        attribute.addFlashAttribute("msg", "No existe la votación que desea eliminar");
+        }
         return "redirect:/votaciones/view";
     }
 

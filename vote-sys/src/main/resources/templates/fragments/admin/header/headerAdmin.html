@@ -6,45 +6,51 @@
     <link rel="stylesheet" th:href="../../../../static/css/admin.css">
 </head>
     <body>
-        <nav class="navbar bg-success p-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-success px-4 py-3">
             <div class="container-fluid">
-    
+        
                 <a class="navbar-brand" href="#">
-                    <img src="logo.png" alt="" width="60" height="50" class="d-inline-block align-text-top">
+                    <img src="../../../../static/logo.png" alt="" width="60" height="50" class="d-inline-block align-text-top">
                 </a>
-    
-                <ul class="nav justify-content-end">
-    
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <button type="button" class="text-light bg-transparent border-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Aprendices
-                            </button>
-                        </a>
-                    </li>
-    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Candidatos
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" th:href="@{/candidatos/create}">Agregar candidato</a></li>
-                            <li><a class="dropdown-item" th:href="@{/candidatos/view}">Ver candidatos</a></li>
-                        </ul>
-                    </li>
-    >
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Votaciones
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" th:href="@{/votaciones/create}">Agregar Votacion</a></li>
-                            <li><a class="dropdown-item" th:href="@{/votaciones/view}">Ver Votaciones</a></li>
-                        </ul>
-                    </li>
-    
-                </ul>
-                
+        
+                <button class="navbar-toggler border-0 text-success" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <img src="../../../../static/icono.jpg" width="120" height="100" class="p-4 text-white" />
+                </button>
+        
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+        
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">
+                                <button type="button" class="text-light bg-transparent border-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Aprendices
+                                </button>
+                            </a>
+                        </li>
+        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Candidatos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Agregar candidato</a></li>
+                                <li><a class="dropdown-item" href="#">Ver candidatos</a></li>
+                            </ul>
+                        </li>
+        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Votaciones
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Agregar Votacion</a></li>
+                                <li><a class="dropdown-item" href="#">Ver Votaciones</a></li>
+                            </ul>
+                        </li>
+        
+                    </ul>
+                </div>
+        
             </div>
         </nav>
     

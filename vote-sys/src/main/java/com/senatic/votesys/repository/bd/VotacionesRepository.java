@@ -8,4 +8,10 @@ import com.senatic.votesys.model.Votacion;
 @Repository
 public interface VotacionesRepository extends JpaRepository<Votacion, Long>{
     
+    @Query(value="UPDATE votaciones c SET c.estatus = 'CERRADA' WHERE c.id= :idVotacion" , nativeQuery = true)
+    void disableVotacionById(Long idVotacion);
+    
+    @Query(value="UPDATE votaciones c SET c.estatus = 'ABIERTA' WHERE c.id= :idVotacion" , nativeQuery = true)
+    void enableVotacionById(Long idVotacion);
+
 }

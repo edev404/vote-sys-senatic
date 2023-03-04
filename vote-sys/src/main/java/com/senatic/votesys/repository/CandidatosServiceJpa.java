@@ -52,6 +52,15 @@ public class CandidatosServiceJpa implements ICandidatosService{
         candidatosRepository.save(candidato);
     }
 
+    @Override
+    public void disableCandidatoById(Long idCandidato){
+        candidatosRepository.disableCandidatoById(idCandidato);
+    }
+
+    @Override
+    public void enableCandidatoById(Long idCandidato){
+        candidatosRepository.enableCandidatoById(idCandidato);
+    }
    
     
 }

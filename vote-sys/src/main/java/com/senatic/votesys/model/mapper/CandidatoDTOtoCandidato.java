@@ -33,7 +33,7 @@ public class CandidatoDTOtoCandidato implements GenericMapper<CandidatoDTO, Cand
         candidato.setPropuestas(dto.getPropuestas());
 
         //Estatus field
-        candidato.setEstatus(1);
+        candidato.setEstatus(EstadoCandidato.HABILITADO);
         
         //Votacion field
         Votacion votacion = new Votacion();

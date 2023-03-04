@@ -49,16 +49,42 @@ public class CandidatosController {
     }
 
     @GetMapping("/search")
-    public String searchCandidato(@ModelAttribute("search") Candidato candidato, Model model,
+    public String searchCandidato(@ModelAttribute("search") Candidato candidato,
                                 @RequestParam(defaultValue = "0") Integer page,
-                                @RequestParam(defaultValue = "5") Integer size){
+                                @RequestParam(defaultValue = "5") Integer size,
+                                Model model){
         ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("idCategoria", ExampleMatcher.GenericPropertyMatchers.contains());
         Example<Candidato> example = Example.of(candidato, matcher);
         Pageable paging = PageRequest.of(page, size);
         Page<Candidato> listCandidatos = candidatosService.getCandidatosPaginateByExample(paging, example);
         model.addAttribute("candidatos", listCandidatos);
-        return "";
+        return "/admin/candidatos/list";
     }
+
+    @PatchMapping("/enable/{id}")
+    public String enableCandidatoById(@PathVariable("id") Long idCandidato){
+        Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
+        if (optional.isPresent()) {
+            candidatosService.enableCandidatoById(optional.get().getId());
+            attribute.addFlashAttribute("msg", "Candidato habilitado satisfactoriamente");
+        } else {
+            attribute.addFlashAttribute("msg", "No existe el candidato que desea habilitar");
+        }
+        return "redirect:/candidatos/view";
+    }
+
+    @PatchMapping("/disable/{id}")
+    public String disableCandidatoById(@PathVariable("id") Long idCandidato){
+        Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
+        if (optional.isPresent()) {
+            candidatosService.disableCandidatoById(optional.get().getId());
+            attribute.addFlashAttribute("msg", "Candidato inhabilitado satisfactoriamente");
+        } else {
+            attribute.addFlashAttribute("msg", "No existe el candidato que desea inhabilitar");
+        }
+        return "redirect:/candidatos/view";
+    }
+
 
     @GetMapping("/delete/{id}")
     public String deleteCandidatoById(@PathVariable("id") Long idCandidato, RedirectAttributes attribute){

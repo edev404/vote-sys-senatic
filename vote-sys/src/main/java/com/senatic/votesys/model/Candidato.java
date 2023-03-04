@@ -35,5 +35,6 @@ public class Candidato {
     private Votacion votacion;
     @Nullable
     private String propuestas;
-    private Integer estatus;
+    @Enumerated(EnumType.STRING)
+    private EstadoCandidato estatus;
 }

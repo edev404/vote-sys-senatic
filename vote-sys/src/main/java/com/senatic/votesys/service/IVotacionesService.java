@@ -17,4 +17,6 @@ public interface IVotacionesService {
     Page<Votacion> getVotacionesPaginate(Pageable paging);
     Page<Votacion> getVotacionesPaginateByExample(Pageable paging, Example<Votacion> example);
     Optional<Votacion> getVotacionById(Long idVotacion);
+    void disableVotacionById(Long idVotacion);
+    void enableVotacionById(Long idVotacion);
 }

@@ -15,4 +15,6 @@ public interface ICandidatosService {
     Optional<Candidato> getCandidatoById(Long idCandidato);
     void deleteCandidato(Candidato candidato);
     void addCandidato(Candidato candidato);
+    void disableCandidatoById(Long idCandidato);
+    void enableCandidatoById(Long idCandidato);
 }

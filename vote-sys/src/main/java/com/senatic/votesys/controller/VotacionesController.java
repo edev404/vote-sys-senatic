@@ -86,14 +86,26 @@ public class VotacionesController {
     }
 
 
-    @GetMapping("/delete/{id}")
-    public String deleteVotacion(@PathVariable(name="id", required = true) Long idVotacion, RedirectAttributes attribute){
+    @PatchMapping("/disable/{id}")
+    public String disableVotacion(@PathVariable(name="id", required = true) Long idVotacion, RedirectAttributes attribute){
         Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
         if (optional.isPresent()) {
-            votacionesService.deleteVotacion(optional.get());
-            attribute.addFlashAttribute("msg", "Votación eliminada satisfactoriamente");
+            votacionesService.disableVotacionById(optional.get().getId());
+            attribute.addFlashAttribute("msg", "Votación deshabilitada satisfactoriamente");
         }else {
-        attribute.addFlashAttribute("msg", "No existe la votación que desea eliminar");
+        attribute.addFlashAttribute("msg", "No existe la votación que desea deshabilitar");
+        }
+        return "redirect:/votaciones/view";
+    }
+
+    @PatchMapping("/enable/{id}")
+    public String enableVotacion(@PathVariable(name="id", required = true) Long idVotacion, RedirectAttributes attribute){
+        Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
+        if (optional.isPresent()) {
+            votacionesService.enableVotacionById(optional.get().getId());
+            attribute.addFlashAttribute("msg", "Votación habilitada satisfactoriamente");
+        }else {
+        attribute.addFlashAttribute("msg", "No existe la votación que desea habilitar");
         }
         return "redirect:/votaciones/view";
     }

@@ -12,61 +12,52 @@
     <title>Add Votacion</title>
 </head>
 <body>
-    <div class="container mt-3 p-5">
-        <form>
-            <div class="row w-50 p-3 m-auto">
-        
-                <div class="col-12">
-                    <div class="mb-3">
-                        <label class="form-label" for="votacion">Nombre Votacion:</label>
-                        <input type="text" class="form-control " id="votacion">
-                    </div>
+    <div class="container mt-3 p-3">
+        <form class="d-lg-flex bg-light p-5">
+            <div class="row col-lg-4 bg-success p-5 rounded">
+                <img src="../../../static/logo.png" alt="..." style="height: 350px;" />
+            </div>
+            <div class="row col-lg-8 m-auto g-3">
+
+                <div class="col-md-12">
+                    <label class="form-label" for="votacion">Nombre Votación:</label>
+                    <input type="text" class="form-control" id="votacion">
                 </div>
 
-                
-                <div class="col-6">
-                    <div class="mb-3">
-                        <label class="form-label" for="estado">Estado Votacion:</label>
-                        <select class="form-select" aria-label="Default select example" id="estado">
-                            <option value="creada">Creada</option>
-                            <option value="abierta">Abierta</option>
-                            <option value="cerrada">Cerrada</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="col-6">
-                    <div class="mb-3">
-                        <label class="form-label" for="fecha">Fecha Terminacion:</label>
-                        <input type="date" class="form-control" id="fecha">
-                    </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="estado">Estado Votación:</label>
+                    <select class="form-select" aria-label="Default select example" id="estado">
+                        <option value="creada">Creada</option>
+                        <option value="abierta">Abierta</option>
+                        <option value="cerrada">Cerrada</option>
+                    </select>
                 </div>
 
-                <div class="col-12">
-                    <div class="mb-3">
-                        <label class="form-label" for="destacada">Votacion destacada:</label>
-                        <select class="form-select" aria-label="Default select example" id="destacada">
-                            <option value="true">true</option>
-                            <option value="false">false</option>
-                        </select>
-                    </div>
-                </div>
-                
-                
-                <div class="col-12">
-                    <div class="mb-3">
-                        <label class="form-check-label" for="propuestas">Descripcion Votacion:</label>
-                        <textarea class="form-control auto-resize" id="propuestas" rows="3" cols="50"></textarea>
-                    </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="fecha">Fecha Terminación:</label>
+                    <input type="date" class="form-control" id="fecha">
                 </div>
 
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary rounded-pill">
-                        Agregar Votacion
+                <div class="col-md-12">
+                    <label class="form-label" for="destacada">Votación destacada:</label>
+                    <select class="form-select" aria-label="Default select example" id="destacada">
+                        <option value="true">true</option>
+                        <option value="false">false</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12">
+                    <label class="form-label" for="descripcion">Descripción Votación:</label>
+                    <textarea class="form-control" id="descripcion" rows="3"></textarea>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end">
+                    <button class="btn btn-primary">
+                        Agregar Votación
                     </button>
                 </div>
-            </div>
 
+            </div>
         </form>
     </div>
 

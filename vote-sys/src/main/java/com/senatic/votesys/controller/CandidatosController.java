@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,25 +63,25 @@ public class CandidatosController {
     }
 
     @PatchMapping("/enable/{id}")
-    public String enableCandidatoById(@PathVariable("id") Long idCandidato){
+    public String enableCandidatoById(@PathVariable("id") Long idCandidato, RedirectAttributes attributes){
         Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
         if (optional.isPresent()) {
             candidatosService.enableCandidatoById(optional.get().getId());
-            attribute.addFlashAttribute("msg", "Candidato habilitado satisfactoriamente");
+            attributes.addFlashAttribute("msg", "Candidato habilitado satisfactoriamente");
         } else {
-            attribute.addFlashAttribute("msg", "No existe el candidato que desea habilitar");
+            attributes.addFlashAttribute("msg", "No existe el candidato que desea habilitar");
         }
         return "redirect:/candidatos/view";
     }
 
     @PatchMapping("/disable/{id}")
-    public String disableCandidatoById(@PathVariable("id") Long idCandidato){
+    public String disableCandidatoById(@PathVariable("id") Long idCandidato, RedirectAttributes attributes){
         Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
         if (optional.isPresent()) {
             candidatosService.disableCandidatoById(optional.get().getId());
-            attribute.addFlashAttribute("msg", "Candidato inhabilitado satisfactoriamente");
+            attributes.addFlashAttribute("msg", "Candidato inhabilitado satisfactoriamente");
         } else {
-            attribute.addFlashAttribute("msg", "No existe el candidato que desea inhabilitar");
+            attributes.addFlashAttribute("msg", "No existe el candidato que desea inhabilitar");
         }
         return "redirect:/candidatos/view";
     }

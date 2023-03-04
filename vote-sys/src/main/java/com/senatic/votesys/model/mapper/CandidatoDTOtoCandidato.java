@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.Candidato;
+import com.senatic.votesys.model.enums.EstadoCandidato;
 import com.senatic.votesys.model.Imagen;
 import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.model.dto.CandidatoDTO;

@@ -55,4 +55,14 @@ public class VotacionesServiceJpa implements IVotacionesService{
     public void deleteVotacion(Votacion votacion) {
         votacionesJpa.delete(votacion);
     }
+
+    @Override
+    public void disableVotacionById(Long idVotacion) {
+        votacionesJpa.disableVotacionById(idVotacion);
+    }
+
+    @Override
+    public void enableVotacionById(Long idVotacion) {
+        votacionesJpa.enableVotacionById(idVotacion);
+    }
 }

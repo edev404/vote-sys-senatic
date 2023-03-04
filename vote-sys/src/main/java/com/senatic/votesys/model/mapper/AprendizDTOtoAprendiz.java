@@ -38,6 +38,7 @@ public class AprendizDTOtoAprendiz implements GenericMapper<AprendizDTO, Aprendi
         aprendiz.setPrograma(dto.getPrograma());
         aprendiz.setTipoDocumento(dto.getTipoDocumento());
         aprendiz.setEstado(dto.getEstado().equalsIgnoreCase("EN FORMACION") ? EstadoAprendiz.EN_FORMACION : EstadoAprendiz.CANCELADO);
+        aprendiz.setCorreoElectronico(dto.getCorreoElectronico());
 
         //Aprendiz Usuario fields
         Usuario usuario = new Usuario();

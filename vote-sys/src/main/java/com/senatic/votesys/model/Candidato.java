@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -23,7 +24,7 @@ import com.senatic.votesys.model.enums.EstadoCandidato;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="candidatos")
+@Table(name="candidatos", indexes = @Index(columnList = "idAprendiz", unique = true))
 public class Candidato {
 
     @Id

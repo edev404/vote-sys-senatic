@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="aprendices")
+@Table(name="aprendices", indexes = @Index(columnList = "id, correoElectronico, celular", unique = true))
 public class Aprendiz {
     
     @Id
@@ -31,6 +32,7 @@ public class Aprendiz {
     @JoinColumn(name="idUsuario")
     private Usuario usuario;
     private String celular;
+    private String correoElectronico;
     private String ficha;
     private String programa;
     @Enumerated(EnumType.STRING)

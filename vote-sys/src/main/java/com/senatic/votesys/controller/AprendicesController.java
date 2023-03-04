@@ -1,5 +1,7 @@
 package com.senatic.votesys.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.senatic.votesys.exception.CsvParsingException;
 import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.dto.AprendizDTO;
+import com.senatic.votesys.model.mapper.GenericMapper;
 import com.senatic.votesys.service.IAprendicesService;
 import com.senatic.votesys.utils.FileHandler;
 
@@ -28,7 +31,10 @@ import com.senatic.votesys.utils.FileHandler;
 public class AprendicesController {
     
 	@Autowired
-	private IAprendicesService aprendizService;
+	private IAprendicesService aprendicesService;
+
+    @Autowired
+    private GenericMapper<AprendizDTO, Aprendiz> genericMapper;
 	
     @PostMapping("/create/form")
     public String createAprendiz(AprendizDTO aprendiz, RedirectAttributes redirectAtt){
@@ -38,7 +44,7 @@ public class AprendicesController {
         Redirigir a la lista de aprendices
         Enviar mensaje de confirmación
          */
-    	if(!aprendizService.addAprendiz(null)) {
+    	if(!aprendicesService.addAprendiz(null)) {
     		redirectAtt.addFlashAttribute("msg", "el aprendiz ya existe");
     	}else {
     		redirectAtt.addFlashAttribute("msg", "el aprendiz fue almacenado satisfactoriamente");
@@ -56,20 +62,16 @@ public class AprendicesController {
     }
 
     @PostMapping("/create/upload")
-    public String saveAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes ra){
-        /* 
-        TO DO: 
-        Recibir un MultipartFile y Obtener lista de aprendices
-        Crear 1 usuario por cada aprendiz - username & password = documento identidad
-        Agregar aprendices y usuarios
-        Redirigir a vista de aprendices
-        Enviar mensaje de confirmación
-        */
+    public String saveAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes attributes){
     	try {
-			FileHandler.csvToList(csvFile);
-			ra.addFlashAttribute("msg", "todos los registros guardados exitosamente");
+			List<AprendizDTO> aprendicesDTO = FileHandler.csvToList(csvFile); //Terminar fileHandler
+            aprendicesDTO.stream().forEach( aprendizDTO -> {
+                Aprendiz aprendiz = genericMapper.map(aprendizDTO);
+                aprendicesService.addAprendiz(aprendiz);
+            });
+			attributes.addFlashAttribute("msgDone", "todos los registros guardados exitosamente");
 		} catch (CsvParsingException e) {
-			ra.addFlashAttribute("msg", "hubo errores al guardar los registros del documento CSV");
+			attributes.addFlashAttribute("msgDanger", "hubo errores al guardar los registros del documento CSV");
 		}
         return "redirect:/aprendices/view";
     }
@@ -84,7 +86,7 @@ public class AprendicesController {
          Debe soportar busqueda By example por ficha
          */
     	Pageable paging = PageRequest.of(page, size);
-        Page<Aprendiz> listAprendices = aprendizService.getAprendicesPaginate(paging);
+        Page<Aprendiz> listAprendices = aprendicesService.getAprendicesPaginate(paging);
         model.addAttribute("aprendices", listAprendices);
         return "admin/add-aprendiz/list";
     }
@@ -96,7 +98,7 @@ public class AprendicesController {
         Eliminar al aprendiz por id y redirigir a la vista de la lista de aprendices
         Enviar mensaje de confirmación
          */
-    	aprendizService.deleteById(id);
+    	aprendicesService.deleteById(id);
     	redirectAtt.addFlashAttribute("msg", "borrado exitosamente");
         return "redirect:/aprendices/view";
     }
@@ -107,7 +109,7 @@ public class AprendicesController {
         TO DO:
         Retornar el formulario de aprendiz con todos los datos correspondientes al aprendiz del id
          */
-    	model.addAttribute("aprendiz", aprendizService.findById(id).get());
+    	model.addAttribute("aprendiz", aprendicesService.findById(id).get());
         return "admin/add-aprendiz/form";
     }
 
@@ -119,7 +121,7 @@ public class AprendicesController {
         Redirigir a la vista de aprendices
         Enviar mensaje de confirmación
          */
-    	aprendizService.updateAprendiz(aprendiz);
+    	aprendicesService.updateAprendiz(aprendiz);
         return "redirect:/aprendices/view";
     }
     

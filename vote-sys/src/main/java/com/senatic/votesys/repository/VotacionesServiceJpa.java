@@ -32,7 +32,7 @@ public class VotacionesServiceJpa implements IVotacionesService{
     }
 
     @Override
-    public void deleteById(Long idVotacion) {
+    public void deleteById(Integer idVotacion) {
         votacionesJpa.deleteById(idVotacion);
     }
 
@@ -46,10 +46,6 @@ public class VotacionesServiceJpa implements IVotacionesService{
         return votacionesJpa.findAll(example, paging);
     }
 
-    @Override
-    public Optional<Votacion> getVotacionById(Long idVotacion) {
-        return votacionesJpa.findById(idVotacion);
-    }
 
     @Override
     public void deleteVotacion(Votacion votacion) {
@@ -57,12 +53,17 @@ public class VotacionesServiceJpa implements IVotacionesService{
     }
 
     @Override
-    public void disableVotacionById(Long idVotacion) {
+    public void disableVotacionById(Integer idVotacion) {
         votacionesJpa.disableVotacionById(idVotacion);
     }
 
     @Override
-    public void enableVotacionById(Long idVotacion) {
+    public void enableVotacionById(Integer idVotacion) {
         votacionesJpa.enableVotacionById(idVotacion);
+    }
+
+    @Override
+    public Optional<Votacion> getVotacionById(Integer idVotacion) {
+        return votacionesJpa.findById(idVotacion);
     }
 }

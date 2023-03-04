@@ -28,7 +28,7 @@ public class Candidato {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     @OneToOne
     @JoinColumn(name = "idAprendiz")
     private Aprendiz aprendiz;
@@ -41,5 +41,5 @@ public class Candidato {
     @Nullable
     private String propuestas;
     @Enumerated(EnumType.STRING)
-    private EstadoCandidato estatus;
+    private EstadoCandidato estado;
 }

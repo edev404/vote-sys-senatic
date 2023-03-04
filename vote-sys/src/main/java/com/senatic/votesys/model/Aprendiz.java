@@ -1,6 +1,10 @@
 package com.senatic.votesys.model;
 
+import com.senatic.votesys.model.enums.EstadoAprendiz;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -21,8 +25,14 @@ public class Aprendiz {
     @Id
     private String id;
     @OneToOne
+    private String nombre;
+    private String apellido;
+    private String tipoDocumento;
     @JoinColumn(name="idUsuario")
     private Usuario usuario;
-    private String tipoDocumento;
-    private String fichaPrograma;
+    private String celular;
+    private String ficha;
+    private String programa;
+    @Enumerated(EnumType.STRING)
+    private EstadoAprendiz estado;
 }

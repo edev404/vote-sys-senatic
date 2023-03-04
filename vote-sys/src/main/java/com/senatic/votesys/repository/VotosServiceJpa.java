@@ -18,7 +18,7 @@ public class VotosServiceJpa implements IVotosService{
     private VotosRepository votosRepository;
 
     @Override
-    public Boolean hasAlreadyVote(String idAprendiz, Long idVotacion) {
+    public Boolean hasAlreadyVote(String idAprendiz, Integer idVotacion) {
         Optional<Voto> voto = votosRepository.findByAprendizAndVotacion(idAprendiz, idVotacion);
         if (voto.isPresent()) {
             return true;

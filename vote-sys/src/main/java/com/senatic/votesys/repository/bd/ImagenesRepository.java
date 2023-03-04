@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.senatic.votesys.model.Imagen;
 
 @Repository
-public interface ImagenesRepository extends JpaRepository<Imagen, Long>{
+public interface ImagenesRepository extends JpaRepository<Imagen, Integer>{
     
 }

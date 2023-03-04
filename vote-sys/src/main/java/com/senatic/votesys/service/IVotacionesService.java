@@ -12,11 +12,11 @@ import com.senatic.votesys.model.Votacion;
 public interface IVotacionesService {
     List<Votacion> getVotaciones();
     void addVotacion(Votacion votacion);
-    void deleteById(Long idVotacion);
+    void deleteById(Integer idVotacion);
     void deleteVotacion(Votacion votacion);
     Page<Votacion> getVotacionesPaginate(Pageable paging);
     Page<Votacion> getVotacionesPaginateByExample(Pageable paging, Example<Votacion> example);
-    Optional<Votacion> getVotacionById(Long idVotacion);
-    void disableVotacionById(Long idVotacion);
-    void enableVotacionById(Long idVotacion);
+    Optional<Votacion> getVotacionById(Integer idVotacion);
+    void disableVotacionById(Integer idVotacion);
+    void enableVotacionById(Integer idVotacion);
 }

@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 import com.senatic.votesys.model.Votacion;
 
 @Repository
-public interface VotacionesRepository extends JpaRepository<Votacion, Long>{
+public interface VotacionesRepository extends JpaRepository<Votacion, Integer>{
     
     @Query(value="UPDATE votaciones c SET c.estatus = 'CERRADA' WHERE c.id= :idVotacion" , nativeQuery = true)
-    void disableVotacionById(Long idVotacion);
+    void disableVotacionById(Integer idVotacion);
     
     @Query(value="UPDATE votaciones c SET c.estatus = 'ABIERTA' WHERE c.id= :idVotacion" , nativeQuery = true)
-    void enableVotacionById(Long idVotacion);
+    void enableVotacionById(Integer idVotacion);
 
 }

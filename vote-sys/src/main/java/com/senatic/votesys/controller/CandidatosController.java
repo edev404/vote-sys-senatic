@@ -63,38 +63,38 @@ public class CandidatosController {
     }
 
     @PatchMapping("/enable/{id}")
-    public String enableCandidatoById(@PathVariable("id") Long idCandidato, RedirectAttributes attributes){
+    public String enableCandidatoById(@PathVariable("id") Integer idCandidato, RedirectAttributes attributes){
         Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
         if (optional.isPresent()) {
             candidatosService.enableCandidatoById(optional.get().getId());
-            attributes.addFlashAttribute("msg", "Candidato habilitado satisfactoriamente");
+            attributes.addFlashAttribute("msgDone", "Candidato habilitado satisfactoriamente");
         } else {
-            attributes.addFlashAttribute("msg", "No existe el candidato que desea habilitar");
+            attributes.addFlashAttribute("msgDanger", "No existe el candidato que desea habilitar");
         }
         return "redirect:/candidatos/view";
     }
 
     @PatchMapping("/disable/{id}")
-    public String disableCandidatoById(@PathVariable("id") Long idCandidato, RedirectAttributes attributes){
+    public String disableCandidatoById(@PathVariable("id") Integer idCandidato, RedirectAttributes attributes){
         Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
         if (optional.isPresent()) {
             candidatosService.disableCandidatoById(optional.get().getId());
-            attributes.addFlashAttribute("msg", "Candidato inhabilitado satisfactoriamente");
+            attributes.addFlashAttribute("msgDone", "Candidato inhabilitado satisfactoriamente");
         } else {
-            attributes.addFlashAttribute("msg", "No existe el candidato que desea inhabilitar");
+            attributes.addFlashAttribute("msgDanger", "No existe el candidato que desea inhabilitar");
         }
         return "redirect:/candidatos/view";
     }
 
 
     @GetMapping("/delete/{id}")
-    public String deleteCandidatoById(@PathVariable("id") Long idCandidato, RedirectAttributes attribute){
+    public String deleteCandidatoById(@PathVariable("id") Integer idCandidato, RedirectAttributes attribute){
         Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
         if (optional.isPresent()) {
             candidatosService.deleteCandidato(optional.get());
-            attribute.addFlashAttribute("msg", "Candidato eliminado satisfactoriamente");
+            attribute.addFlashAttribute("msgDone", "Candidato eliminado satisfactoriamente");
         } else {
-            attribute.addFlashAttribute("msg", "No existe el candidato que desea eliminar");
+            attribute.addFlashAttribute("msgDanger", "No existe el candidato que desea eliminar");
         }
         return "redirect:/candidatos/view";
     }
@@ -105,13 +105,13 @@ public class CandidatosController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editCandidato(@PathVariable("id") Long idCandidato,  Model model, RedirectAttributes attributes){
+    public String editCandidato(@PathVariable("id") Integer idCandidato,  Model model, RedirectAttributes attributes){
         Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
         if (optional.isPresent()) {
             model.addAttribute("candidato", optional.get());
             return "/admin/candidatos/add";
         } else {
-            attributes.addFlashAttribute("msg", "No existe el candidato que intenta editar");
+            attributes.addFlashAttribute("msgDanger", "No existe el candidato que intenta editar");
             return "redirect:/votaciones/view";
         }
     }
@@ -120,12 +120,12 @@ public class CandidatosController {
     public String saveCandidato(CandidatoDTO candidato, RedirectAttributes attributes, Model model){
         Optional<Aprendiz> optional = aprendicesService.findById(candidato.getDocumento());
         if (optional.isEmpty()) {
-            attributes.addFlashAttribute("msg", "El documento proporcionado no corresponde a ningun aprendiz");
+            attributes.addFlashAttribute("msgDanger", "El documento proporcionado no corresponde a ningun aprendiz");
             return "redirect:/candidatos/create";
         }
         Candidato candidatoMapped = genericMapper.map(candidato);
         candidatosService.addCandidato(candidatoMapped);
-        attributes.addFlashAttribute("msg", "Candidato guardado satisfactoriamente");
+        attributes.addFlashAttribute("msgDone", "Candidato guardado satisfactoriamente");
         return "redirect:/candidatos/view";
     }
 

@@ -1,0 +1,37 @@
+package com.senatic.votesys.security;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class DatabaseWebSecurity {
+    
+    @Bean
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http
+				.authorizeHttpRequests()
+				.anyRequest().permitAll();
+		return http.build();
+	}
+
+	@Bean UserDetailsManager users(DataSource dataSource) {
+		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource); users.
+		setUsersByUsernameQuery("select username, password, estatus from usuarios where username=?"
+		); users.setAuthoritiesByUsernameQuery(
+		"select u.username, p.perfil from usuarioPerfil up " +
+		"inner join usuarios u on u.id = up.idUsuario " +
+		"inner join perfiles p on p.id = up.idPerfil " + "where u.username = ?");
+		return users; }
+
+    @Bean PasswordEncoder passwordEncoder() { 
+        return new BCryptPasswordEncoder();
+    }
+}

@@ -11,10 +11,10 @@ import com.senatic.votesys.model.Candidato;
 public interface ICandidatosService {
     Page<Candidato> getCandidatosPaginate(Pageable page);
     Page<Candidato> getCandidatosPaginateByExample(Pageable page, Example<Candidato> example);
-    void deleteCandidatoById(Long idCandidato);
-    Optional<Candidato> getCandidatoById(Long idCandidato);
+    void deleteCandidatoById(Integer idCandidato);
+    Optional<Candidato> getCandidatoById(Integer idCandidato);
     void deleteCandidato(Candidato candidato);
     void addCandidato(Candidato candidato);
-    void disableCandidatoById(Long idCandidato);
-    void enableCandidatoById(Long idCandidato);
+    void disableCandidatoById(Integer idCandidato);
+    void enableCandidatoById(Integer idCandidato);
 }

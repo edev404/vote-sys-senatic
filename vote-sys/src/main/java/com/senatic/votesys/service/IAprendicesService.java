@@ -13,4 +13,5 @@ public interface IAprendicesService {
 	void deleteById(String idAprendiz);
 	Optional<Aprendiz> findById(String id);
 	boolean updateAprendiz(AprendizDTO aprendizDTO);
+	Optional<Aprendiz> getAprendizById(String idAprendiz);
 }

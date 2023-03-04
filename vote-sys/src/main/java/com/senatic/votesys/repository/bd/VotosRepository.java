@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.senatic.votesys.model.Voto;
 
 @Repository
-public interface VotosRepository extends JpaRepository<Voto, Long>{
-    Optional<Voto> findByAprendizAndVotacion(String idAprendiz, Long idVotacion);
+public interface VotosRepository extends JpaRepository<Voto, Integer>{
+    Optional<Voto> findByAprendizAndVotacion(String idAprendiz, Integer idVotacion);
 }

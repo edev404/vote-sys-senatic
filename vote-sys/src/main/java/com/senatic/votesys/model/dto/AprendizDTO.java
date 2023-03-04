@@ -5,9 +5,15 @@ import lombok.Data;
 
 
 @Data
-@JsonPropertyOrder({"id", "tipoDocumento", "fichaPrograma"})
+@JsonPropertyOrder({"ficha", "programa", "tipoDocumento", "numeroDocumento", "nombre", "apellido", "celular", "correoElectronico", "estado"})
 public class AprendizDTO {
-    private String id;
+    private String nombre;
+    private String apellido;
     private String tipoDocumento;
-    private String fichaPrograma;
+    private String celular;
+    private String correoElectronico;
+    private String numeroDocumento;
+    private String ficha;
+    private String programa;
+    private String estado;
 }

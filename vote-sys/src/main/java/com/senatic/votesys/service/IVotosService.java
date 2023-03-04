@@ -2,5 +2,5 @@ package com.senatic.votesys.service;
 
 
 public interface IVotosService {
-    Boolean hasAlreadyVote(String idAprendiz, Long idVotacion);
+    Boolean hasAlreadyVote(String idAprendiz, Integer idVotacion);
 }

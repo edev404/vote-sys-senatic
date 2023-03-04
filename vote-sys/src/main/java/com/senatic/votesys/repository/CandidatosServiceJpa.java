@@ -32,13 +32,9 @@ public class CandidatosServiceJpa implements ICandidatosService{
         return candidatosRepository.findAll(example, page);
     }
 
-    @Override
-    public void deleteCandidatoById(Long idCandidato) {
-        candidatosRepository.deleteById(idCandidato);
-    }
 
     @Override
-    public Optional<Candidato> getCandidatoById(Long idCandidato) {
+    public Optional<Candidato> getCandidatoById(Integer idCandidato) {
         return candidatosRepository.findById(idCandidato);
     }
 
@@ -53,13 +49,18 @@ public class CandidatosServiceJpa implements ICandidatosService{
     }
 
     @Override
-    public void disableCandidatoById(Long idCandidato){
+    public void disableCandidatoById(Integer idCandidato){
         candidatosRepository.disableCandidatoById(idCandidato);
     }
 
     @Override
-    public void enableCandidatoById(Long idCandidato){
+    public void enableCandidatoById(Integer idCandidato){
         candidatosRepository.enableCandidatoById(idCandidato);
+    }
+
+    @Override
+    public void deleteCandidatoById(Integer idCandidato) {
+        candidatosRepository.deleteById(idCandidato);
     }
    
     

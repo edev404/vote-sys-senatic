@@ -11,6 +11,6 @@ public class CandidatoDTO {
     
     private String documento;
     private MultipartFile imagen;
-    private Long idVotacion;
+    private Integer idVotacion;
     private String propuestas;
 }

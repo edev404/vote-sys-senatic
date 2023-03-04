@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 import com.senatic.votesys.model.Candidato;
 
 @Repository
-public interface CandidatosRepository extends JpaRepository<Candidato, Long>{
+public interface CandidatosRepository extends JpaRepository<Candidato, Integer>{
     
     @Query(value="UPDATE candidatos c SET c.estatus = 'INHABILITADO' WHERE c.id= :idCandidato" , nativeQuery = true)
-    void disableCandidatoById(Long idCandidato);
+    void disableCandidatoById(Integer idCandidato);
     
     @Query(value="UPDATE candidatos c SET c.estatus = 'HABILITADO' WHERE c.id= :idCandidato" , nativeQuery = true)
-    void enableCandidatoById(Long idCandidato);
+    void enableCandidatoById(Integer idCandidato);
 }

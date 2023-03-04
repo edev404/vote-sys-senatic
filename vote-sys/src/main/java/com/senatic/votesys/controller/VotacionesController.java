@@ -1,6 +1,8 @@
 package com.senatic.votesys.controller;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
@@ -14,13 +16,14 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.senatic.votesys.model.EstadoVotacion;
+import com.senatic.votesys.model.enums.EstadoVotacion;
 import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.service.IVotacionesService;
 
@@ -58,6 +61,18 @@ public class VotacionesController {
         return "/admin/votaciones/list";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editVotacion(@PathVariable("id") Long idVotacion, Model model, RedirectAttributes attributes){
+        Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
+        if (optional.isPresent()) {
+            model.addAttribute("votacion", optional.get());
+            return "/admin/votaciones/add";
+        } else {
+            attributes.addFlashAttribute("msg", "No existe la votación que intenta editar");
+            return "redirect:/votaciones/view";
+        }
+    }
+
     @GetMapping("/create")
     public String createVotacion(Votacion votacion){
         return "/admin/votaciones/add";
@@ -67,14 +82,32 @@ public class VotacionesController {
     public String saveVotacion(Votacion votacion, RedirectAttributes attributes, Model model){
         votacion.setEstado(EstadoVotacion.CREADA);
         votacionesService.addVotacion(votacion);
-        attributes.addFlashAttribute("msg", "Votación creada satisfactoriamente");
+        attributes.addFlashAttribute("msg", "Votación guardada satisfactoriamente");
         return "redirect:/votaciones/view";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteVotacion(@PathVariable(name="id", required = true) Long idVotacion, RedirectAttributes attributes){
-        votacionesService.deleteById(idVotacion);
-        attributes.addFlashAttribute("msg", "Votación eliminada satisfactoriamente");
+
+    @PatchMapping("/disable/{id}")
+    public String disableVotacion(@PathVariable(name="id", required = true) Long idVotacion, RedirectAttributes attribute){
+        Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
+        if (optional.isPresent()) {
+            votacionesService.disableVotacionById(optional.get().getId());
+            attribute.addFlashAttribute("msg", "Votación deshabilitada satisfactoriamente");
+        }else {
+        attribute.addFlashAttribute("msg", "No existe la votación que desea deshabilitar");
+        }
+        return "redirect:/votaciones/view";
+    }
+
+    @PatchMapping("/enable/{id}")
+    public String enableVotacion(@PathVariable(name="id", required = true) Long idVotacion, RedirectAttributes attribute){
+        Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
+        if (optional.isPresent()) {
+            votacionesService.enableVotacionById(optional.get().getId());
+            attribute.addFlashAttribute("msg", "Votación habilitada satisfactoriamente");
+        }else {
+        attribute.addFlashAttribute("msg", "No existe la votación que desea habilitar");
+        }
         return "redirect:/votaciones/view";
     }
 

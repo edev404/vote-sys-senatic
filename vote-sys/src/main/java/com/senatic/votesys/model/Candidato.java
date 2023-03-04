@@ -2,6 +2,8 @@ package com.senatic.votesys.model;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +14,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import com.senatic.votesys.model.enums.EstadoCandidato;
+
 
 @Data
 @Builder
@@ -25,6 +30,9 @@ public class Candidato {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
+    @JoinColumn(name = "idAprendiz")
+    private Aprendiz aprendiz;
+    @OneToOne
     @JoinColumn(name="idImagen")
     private Imagen imagen;
     @OneToOne
@@ -32,5 +40,6 @@ public class Candidato {
     private Votacion votacion;
     @Nullable
     private String propuestas;
-    private Integer estatus;
+    @Enumerated(EnumType.STRING)
+    private EstadoCandidato estatus;
 }

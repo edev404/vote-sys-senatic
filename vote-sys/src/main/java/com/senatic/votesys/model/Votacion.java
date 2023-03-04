@@ -2,6 +2,8 @@ package com.senatic.votesys.model;
 
 import java.util.Date;
 
+import com.senatic.votesys.model.enums.EstadoVotacion;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

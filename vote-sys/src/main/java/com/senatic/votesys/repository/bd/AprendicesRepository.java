@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.senatic.votesys.model.Aprendiz;
 
 @Repository
-public interface AprendicesRepository extends JpaRepository<Aprendiz, Long>{
+public interface AprendicesRepository extends JpaRepository<Aprendiz, String>{
     
 }

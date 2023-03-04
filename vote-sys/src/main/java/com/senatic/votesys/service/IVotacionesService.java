@@ -1,6 +1,7 @@
 package com.senatic.votesys.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,10 @@ public interface IVotacionesService {
     List<Votacion> getVotaciones();
     void addVotacion(Votacion votacion);
     void deleteById(Long idVotacion);
+    void deleteVotacion(Votacion votacion);
     Page<Votacion> getVotacionesPaginate(Pageable paging);
     Page<Votacion> getVotacionesPaginateByExample(Pageable paging, Example<Votacion> example);
+    Optional<Votacion> getVotacionById(Long idVotacion);
+    void disableVotacionById(Long idVotacion);
+    void enableVotacionById(Long idVotacion);
 }

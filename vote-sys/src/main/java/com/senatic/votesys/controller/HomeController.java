@@ -33,5 +33,5 @@ public class HomeController {
         }
         return "redirect:/logout";
     }
-
+    
 }

@@ -86,7 +86,6 @@ public class VotacionesController {
         return "redirect:/votaciones/view";
     }
 
-
     @PatchMapping("/disable/{id}")
     public String disableVotacion(@PathVariable(name="id", required = true) Integer idVotacion, RedirectAttributes attribute){
         Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
@@ -111,7 +110,6 @@ public class VotacionesController {
         return "redirect:/votaciones/view";
     }
 
-    // Convierte el null los string vacíos
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));

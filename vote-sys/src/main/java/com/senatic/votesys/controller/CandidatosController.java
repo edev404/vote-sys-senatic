@@ -3,6 +3,7 @@ package com.senatic.votesys.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +28,7 @@ import com.senatic.votesys.model.dto.CandidatoDTO;
 import com.senatic.votesys.model.mapper.GenericMapper;
 import com.senatic.votesys.service.IAprendicesService;
 import com.senatic.votesys.service.ICandidatosService;
+import com.senatic.votesys.service.IVotacionesService;
 
 @Controller
 @RequestMapping("/candidatos")
@@ -37,6 +41,9 @@ public class CandidatosController {
     private IAprendicesService aprendicesService;
 
     @Autowired
+    private IVotacionesService votacionesService;
+
+    @Autowired
     private GenericMapper<CandidatoDTO, Candidato> genericMapper;
 
     @GetMapping("/view")
@@ -46,7 +53,7 @@ public class CandidatosController {
         Pageable paging = PageRequest.of(page, size);
         Page<Candidato> listCandidatos = candidatosService.getCandidatosPaginate(paging);
         model.addAttribute("candidatos", listCandidatos);
-        return "/admin/candidatos/list";
+        return "admin/candidatos/list";
     }
 
     @GetMapping("/search")
@@ -54,12 +61,12 @@ public class CandidatosController {
                                 @RequestParam(defaultValue = "0") Integer page,
                                 @RequestParam(defaultValue = "5") Integer size,
                                 Model model){
-        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("idCategoria", ExampleMatcher.GenericPropertyMatchers.contains());
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("votacion.id", ExampleMatcher.GenericPropertyMatchers.contains());
         Example<Candidato> example = Example.of(candidato, matcher);
         Pageable paging = PageRequest.of(page, size);
         Page<Candidato> listCandidatos = candidatosService.getCandidatosPaginateByExample(paging, example);
         model.addAttribute("candidatos", listCandidatos);
-        return "/admin/candidatos/list";
+        return "admin/candidatos/list";
     }
 
     @PatchMapping("/enable/{id}")
@@ -99,38 +106,53 @@ public class CandidatosController {
         return "redirect:/candidatos/view";
     }
 
-    @GetMapping("/create")
-    public String createCandidatoForm(Candidato candidato){
-        return "/admin/candidatos/add";
-    }
-
-    @GetMapping("/edit/{id}")
-    public String editCandidato(@PathVariable("id") Integer idCandidato,  Model model, RedirectAttributes attributes){
+    @GetMapping("/update/{id}")
+    public String updateCandidatoForm(@PathVariable("id") Integer idCandidato,  Model model, RedirectAttributes attributes){
         Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
         if (optional.isPresent()) {
             model.addAttribute("candidato", optional.get());
-            return "/admin/candidatos/add";
+            return "admin/candidatos/edit";
         } else {
             attributes.addFlashAttribute("msgDanger", "No existe el candidato que intenta editar");
-            return "redirect:/votaciones/view";
+            return "redirect:/candidatos/view";
         }
     }
 
-    @PostMapping("/save")
-    public String saveCandidato(CandidatoDTO candidato, RedirectAttributes attributes, Model model){
-        Optional<Aprendiz> optional = aprendicesService.findById(candidato.getDocumento());
+    @PostMapping("/update")
+    public String updateCandidato(Candidato candidato, RedirectAttributes attributes, Model model){
+        candidatosService.addCandidato(candidato);
+        attributes.addFlashAttribute("msgDone", "Candidato actualizado satisfactoriamente");
+        return "redirect:/candidatos/view";
+    }
+
+    @GetMapping("/create")
+    public String createCandidatoForm(CandidatoDTO candidatoDTO){
+        return "admin/candidatos/add";
+    }
+
+    @PostMapping("/create")
+    public String createCandidato(CandidatoDTO candidatoDTO, RedirectAttributes attributes, Model model){
+        Optional<Aprendiz> optional = aprendicesService.findById(candidatoDTO.getDocumento());
         if (optional.isEmpty()) {
             attributes.addFlashAttribute("msgDanger", "El documento proporcionado no corresponde a ningun aprendiz");
             return "redirect:/candidatos/create";
         }
-        Candidato candidatoMapped = genericMapper.map(candidato);
-        candidatosService.addCandidato(candidatoMapped);
+        Candidato candidato = genericMapper.map(candidatoDTO);
+        candidatosService.addCandidato(candidato);
         attributes.addFlashAttribute("msgDone", "Candidato guardado satisfactoriamente");
         return "redirect:/candidatos/view";
     }
 
+    // Convierte el null los string vacíos
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}
+
+
     @ModelAttribute
     public void setGenerics(Model model){
         model.addAttribute("search", new Candidato());
+        model.addAttribute("votaciones", votacionesService.getVotaciones());
     }
 }

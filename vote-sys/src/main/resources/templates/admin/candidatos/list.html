@@ -1,31 +1,44 @@
 <!-- Vista para la lista de candidatos -->
 <!doctype html>
-<html lang="en" th:xmlns="https://">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>List Candidatos</title>
+    <title>Candidatos</title>
 </head>
+
 <body>
+    <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
     <div class="container mt-5">
 
         <div class="row mb-3">
-            <form class="form-inline my-2 my-lg-0 d-flex flex-column flex-lg-row gap-3" method="get">
+            <a class="btn btn-primary" th:href="@{/candidatos/create}"
+						title="Crear nueva Oferta de Trabajo" role="button"><i
+						class="fas fa-file" aria-hidden="true"></i> Crear candidato
+            </a>
+            <div th:if="${msgDanger != null}" class="alert alert-success" th:text="${msgDanger}" role="alert">
+            </div>
+            <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
+            </div>
+            <form class="form-inline my-2 my-lg-0 d-flex flex-column flex-lg-row gap-3" method="get" th:action="@{/candidatos/search}" th:object="${search}">
                 <div class="col-lg-6">
 
                     <div class="form-group">
                         <label for="search1" class="form-label">
-                            Introduzca un Tipo de votacion para visualizar candidatos:
+                            Filtrar por votación:
                         </label>
-
                         <div class="d-flex gap-2">
-                            <input class="form-control mr-sm-2 flex-grow-1" type="search" placeholder="Buscar"
-                                aria-label="Buscar" id="search1">
+                            <div class="col-12 mb-3">
+                                <select th:each="votacion : ${votaciones}" class="form-select" aria-label="Default select example" id="select" th:field="*{idVotacion}" name="idVotacion">
+                                    <option th:text="${votacion.nombre}" th:value="${votacion.id}"></option>
+                                </select>
+                            </div>
                             <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
                         </div>
 
@@ -39,28 +52,31 @@
             <table class="table table-hover table-bordered">
                 <thead class="table-success text-center">
                     <tr>
-                        <th scope="col">Cedula</th>
+                        <th scope="col">Documento</th>
                         <th scope="col">Foto</th>
-                        <th scope="col">Nombre Candidato</th>
-                        <!-- Agregar un identificador único a la columna que deseamoa filtrar. utilizaremos el identificador "votacion" para la columna votacion: -->
-                        <th scope="col" id="votacion">Votacion</th>
-                        <th scope="col">Propuesta candidato</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Votacion</th>
+                        <th scope="col">Propuestas</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <tr>
-                        <th scope="row">1001892059</th>
+                        <td scope="row" th:text="${candidato.aprendiz.id}"></td>
                         <td>
-                            <img src="https://th.bing.com/th/id/R.a613cc01100dcfd06daedc1bc8104b5d?rik=ouxB7pD%2ba%2fR0mg&pid=ImgRaw&r=0"
-                                alt="" width="50" height="50">
+                            <img alt="img" src="data:image/jpeg;base64,${candidato.imagen.image}"width="70" height="70">
                         </td>
-                        <td>Luis Valencia</td>
-                        <td>Votacion 1</td>
+                        <td th:text="${candidato.aprendiz.nombre}"></td>
+                        <td th:text="${candidato.votacion.nombre}"></td>
+                        <td th:text="${candidato.propuestas}"></td>
                         <td>
-                            Merienda Gratis
+                                <a th:href="@{/candidatos/update/{id}  (id=${candidato.id})}" class="btn btn-success btn-sm" role="button"title="Editar el candidato"><i class="fas fa-pencil-alt"aria-hidden="true"></i></a>
+                                <a th:if="${candidato.estado == 'HABILITADO'}" th:href="@{/candidatos/disable/{id} (id=${usuario.id})}" class="btn btn-success btn-sm" role="button" title="Inhabilitar candidato"><i class="fas fa-lock" aria-hidden="true"></i></a>	
+                                <a th:if="${candidato.estado == 'INHABILITADO'}" th:href="@{/candidatos/enable/{id} (id=${usuario.id})}" class="btn btn-success btn-sm" role="button" title="Habilitar candidato"><i class="fas fa-unlock" aria-hidden="true"></i></a>
+                                <a th:href="@{/candidatos/delete/{id} (id=${candidato.id})}" class="btn btn-success btn-sm confirmar" role="button" title="Eliminar el candidato"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                    
                         </td>
-                        <td class="d-flex flex-column flex-sm-row gap-2 justify-content-center align-items-center p-2">
+                        <!-- <td class="d-flex flex-column flex-sm-row gap-2 justify-content-center align-items-center p-2">
                             <button class="btn btn-danger">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                     class="bi bi-trash3" viewBox="0 0 16 16">
@@ -75,14 +91,56 @@
                                         d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
                                 </svg>
                             </button>
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </table>
+            <nav th:if="${candidatos.totalPages > 0}"
+                aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"
+                        th:classappend="${candidatos.number == 0 ? 'disabled' : ''}">
+                        <a
+                        th:href="@{/candidatos/view(page=${candidatos.number - 1})}"
+                        class="page-link">Anterior</a>
+                    </li>
+
+                    <li class="page-item"
+                        th:classappend="${i eq candidatos.number + 1} ? 'active'"
+                        th:each="i : ${#numbers.sequence( 1, candidatos.totalPages, 1)}">
+                        <a class="page-link"
+                        th:href="@{/candidatos/view?page={id}(id=${i -1})}"
+                        th:text="${i}" th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                    </li>
+
+                    <li class="page-item"
+                        th:classappend="${candidatos.number == (candidatos.totalPages - 1) ? 'disabled' : ''}">
+                        <a
+                        th:href="@{/candidatos/view(page=${candidatos.number + 1})}"
+                        class="page-link">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        
+
     </div>
     <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+    </script>
+        <script>
+            // Guardamos en una variable una funcion que muestra un cuadro de dialogo de tipo confirm
+            var dialogoConfirm = function(e) {
+                if (!confirm('¿Realmente desea eliminar el registro?'))
+                    e.preventDefault();
+            };
+    
+            // Aplicamos a todos los elementos HTML que tengan la clase CSS 'confirmar' el evento click para que muestre el cuadro de dialogo de confirmacion. 
+            document.querySelectorAll('.confirmar').forEach(function(elemento) {
+                elemento.addEventListener('click', dialogoConfirm, false);
+            });
+        </script>
 </body>
+
 </html>

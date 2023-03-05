@@ -12,7 +12,7 @@
     <title>Add aprendiz con Forms</title>
 </head>
 <body>
-
+    <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
     <div class="container mt-3 p-5">
         <form class="d-lg-flex bg-light p-5">
             <div class="row col-lg-4 bg-success p-5 rounded">
@@ -23,10 +23,10 @@
                     <div class="mb-3">
                         <label for="document-type" class="form-label">Tipo de documento:</label>
                         <select class="form-select" aria-label="Default select example" id="document-type">
-                            <option value="cedula">
+                            <option value="CC">
                                 Cedula ciudadania
                             </option>
-                            <option value="tarjeta">
+                            <option value="TI">
                                 Tarjeta de identidad
                             </option>
                         </select>
@@ -46,10 +46,48 @@
                 </div>
                 <div class="col-12">
                     <div class="mb-3">
+                        <label for="ficha-number" class="form-check-label">Nombre del programa:</label>
+                        <input type="number" class="form-control" id="ficha-number" />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mb-3">
                         <label for="student-name" class="form-check-label">Nombre del Aprendiz:</label>
                         <input type="text" class="form-control" id="student-name" />
                     </div>
                 </div>
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label for="student-name" class="form-check-label">Apellido del Aprendiz:</label>
+                        <input type="text" class="form-control" id="student-lastname" />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label for="student-name" class="form-check-label">Correo electronico:</label>
+                        <input type="text" class="form-control" id="student-email" />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label for="student-name" class="form-check-label">Teléfono del Aprendiz:</label>
+                        <input type="text" class="form-control" id="student-phone" />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <label for="document-type" class="form-label">Estado de aprendiz:</label>
+                        <select class="form-select" aria-label="Default select example" id="document-type">
+                            <option selected value="EN_FORMACION">
+                                En formación
+                            </option>
+                            <option value="CANCELADO">
+                                Cancelado
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                
                 <div class="col-12 d-flex justify-content-end">
                     <button class="btn btn-primary">
                         Agregar Aprendiz

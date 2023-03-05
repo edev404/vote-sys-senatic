@@ -1,6 +1,6 @@
 <!-- Vista para la adición de votaciones -->
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -9,46 +9,29 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Add Votacion</title>
+    <title>Gestionar Votacion</title>
 </head>
 <body>
+    <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
     <div class="container mt-3 p-3">
-        <form class="d-lg-flex bg-light p-5">
+        <form class="d-lg-flex bg-light p-5" th:action="@{/votaciones/create}" th:object="${votacion}" method="POST">
             <div class="row col-lg-4 bg-success p-5 rounded">
-                <img src="../../../static/logo.png" alt="..." style="height: 350px;" />
+                <img th:src="@{logo.png}" alt="logo sena" style="height: 350px;" />
             </div>
             <div class="row col-lg-8 m-auto g-3">
 
                 <div class="col-md-12">
-                    <label class="form-label" for="votacion">Nombre Votación:</label>
-                    <input type="text" class="form-control" id="votacion">
+                    <label class="form-label" for="votacion">Nombre:</label>
+                    <input type="text" class="form-control" id="votacion" name="nombre" th:field="*{nombre}">
                 </div>
-
-                <div class="col-md-6">
-                    <label class="form-label" for="estado">Estado Votación:</label>
-                    <select class="form-select" aria-label="Default select example" id="estado">
-                        <option value="creada">Creada</option>
-                        <option value="abierta">Abierta</option>
-                        <option value="cerrada">Cerrada</option>
-                    </select>
-                </div>
-
                 <div class="col-md-6">
                     <label class="form-label" for="fecha">Fecha Terminación:</label>
-                    <input type="date" class="form-control" id="fecha">
+                    <input type="text" class="form-control" name="fecha" id="fecha" th:field="*{fecha}" placeholder="Fecha de terminacion" required="required">
                 </div>
 
                 <div class="col-md-12">
-                    <label class="form-label" for="destacada">Votación destacada:</label>
-                    <select class="form-select" aria-label="Default select example" id="destacada">
-                        <option value="true">true</option>
-                        <option value="false">false</option>
-                    </select>
-                </div>
-
-                <div class="col-md-12">
-                    <label class="form-label" for="descripcion">Descripción Votación:</label>
-                    <textarea class="form-control" id="descripcion" rows="3"></textarea>
+                    <label class="form-label" for="descripcion">Descripción:</label>
+                    <textarea class="form-control" id="descripcion" rows="3" th:field="*{descripcion}"></textarea>
                 </div>
 
                 <div class="col-12 d-flex justify-content-end">
@@ -63,5 +46,11 @@
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $("#fecha").datepicker({dateFormat: 'dd-mm-yy'});
+          }
+        );
+      </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.senatic.votesys.model;
 
-import jakarta.annotation.Nullable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,7 +14,9 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import com.senatic.votesys.model.enums.EstadoCandidato;
 
@@ -23,8 +25,9 @@ import com.senatic.votesys.model.enums.EstadoCandidato;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString @EqualsAndHashCode
 @Entity
-@Table(name="candidatos", indexes = @Index(columnList = "idAprendiz", unique = true))
+@Table(name="candidatos", indexes = @Index(name="candidatos_unique", columnList = "idAprendiz", unique = true))
 public class Candidato {
 
     @Id
@@ -39,7 +42,7 @@ public class Candidato {
     @OneToOne
     @JoinColumn(name="idVotacion")
     private Votacion votacion;
-    @Nullable
+    @Column(length = 250)
     private String propuestas;
     @Enumerated(EnumType.STRING)
     private EstadoCandidato estado;

@@ -15,24 +15,17 @@
     <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
     <div class="container mt-5">
         <div class="row mb-3">
-            <form class="form-inline my-2 my-lg-0 d-flex flex-column flex-lg-row gap-3" method="get">
-
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="search1" class="form-label">Introduzca una ficha para visualizar los
-                            aprendices:</label>
-                        <div class="d-flex gap-2">
-                            <input class="form-control mr-sm-2 flex-grow-1" type="search" placeholder="Buscar"
-                                aria-label="Buscar" id="search1">
-                            <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="search2" class="form-label">Introduzca una cedula para visualizar los
-                            aprendices:</label>
+            <div th:if="${msgDanger != null}" class="alert alert-danger" th:text="${msgDanger}" role="alert">
+            </div>
+            <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
+            </div>
+            <form class="form-inline my-2 my-lg-0 d-flex flex-column flex-lg-row gap-3" method="get" th:action="@{/aprendices/search}" th:object="${search}">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="search1" class="form-label">Ficha del grupo:</label>
+                    <div class="d-flex gap-2">
+                        <input class="form-control mr-sm-2 flex-grow-1" type="search" placeholder="Buscar">
+                        <label for="search2" class="form-label">Documento de identidad:</label>
                         <div class="d-flex gap-2">
                             <input class="form-control mr-sm-2 flex-grow-1" type="search" placeholder="Buscar"
                                 aria-label="Buscar" id="search2">
@@ -40,26 +33,27 @@
                         </div>
                     </div>
                 </div>
-
             </form>
         </div>
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead class="table-success text-center">
                     <tr>
-                        <!-- Agregar un identificador único a la columna que deseamoa filtrar. utilizaremos el identificador "cedula" para la columna cedula: -->
-                        <th scope="col" id="cedula">Cedula</th>
-                        <!-- Agregar un identificador único a la columna que deseamoa filtrar. utilizaremos el identificador "ficha" para la columna Ficha: -->
-                        <th scope="col" id="ficha">Ficha</th>
+                        <th scope="col">Documento</th>
+                        <th scope="col">Ficha</th>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Correo electronico</th>
+                        <th scope="col">Telefono</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr>
-                        <th scope="row">1001892059</th>
-                        <td>2503106</td>
-                        <td>Luis Valencia</td>
+                    <tr th:each="aprendiz : ${aprendices}">
+                        <th scope="row" th:text="${aprendiz.documento}"></th>
+                        <td th:text="${aprendiz.fichaPrograma}"></td>
+                        <td th:text="${aprendiz.nombre} + ' ' + ${aprendiz.apellido}"></td>
+                        <td th:text="${aprendiz.correoElectronico}"></td>
+                        <td th:text="${aprendiz.celular}"></td>
                         <td class=" d-flex flex-column flex-sm-row gap-2 justify-content-center align-items-center">
                             <button class="btn btn-danger">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

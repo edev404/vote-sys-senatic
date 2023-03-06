@@ -65,15 +65,21 @@ public class AprendicesController {
 
     @PostMapping("/create/upload")
     public String saveAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes attributes){
+        System.out.println("ARCHIVO: " + csvFile.getOriginalFilename());
     	try {
 			List<AprendizDTO> aprendicesDTO = FileHandler.csvToList(csvFile); //Terminar fileHandler
-            aprendicesDTO.stream().forEach( aprendizDTO -> {
-                Aprendiz aprendiz = genericMapper.map(aprendizDTO);
-                aprendicesService.addAprendiz(aprendiz);
-            });
-			attributes.addFlashAttribute("msgDone", "todos los registros guardados exitosamente");
+            if (!aprendicesDTO.isEmpty()) {
+    aprendicesDTO.stream().forEach( aprendizDTO -> {
+                    Aprendiz aprendiz = genericMapper.map(aprendizDTO);
+                    System.out.println(aprendiz.toString());
+                    aprendicesService.addAprendiz(aprendiz);
+                });
+            } else {
+                attributes.addFlashAttribute("msgDanger", "El csv no contiene registros");
+            }
+			attributes.addFlashAttribute("msgDone", "Todos los registros guardados exitosamente");
 		} catch (CsvParsingException e) {
-			attributes.addFlashAttribute("msgDanger", "hubo errores al guardar los registros del documento CSV");
+			attributes.addFlashAttribute("msgDanger", "Hubo errores al guardar los registros del documento CSV");
 		}
         return "redirect:/aprendices/view";
     }
@@ -90,7 +96,7 @@ public class AprendicesController {
     	Pageable paging = PageRequest.of(page, size);
         Page<Aprendiz> listAprendices = aprendicesService.getAprendicesPaginate(paging);
         model.addAttribute("aprendices", listAprendices);
-        return "admin/add-aprendiz/list";
+        return "admin/aprendiz/list";
     }
 
     @GetMapping("/delete/{id}")
@@ -115,7 +121,7 @@ public class AprendicesController {
         return "admin/add-aprendiz/form";
     }
 
-    @PostMapping("/update/")
+    @PostMapping("/update")
     public String updateAprendiz(AprendizDTO aprendiz, RedirectAttributes redirectAtt){
         /*
         TO DO:

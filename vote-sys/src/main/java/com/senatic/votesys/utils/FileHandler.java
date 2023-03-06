@@ -2,6 +2,7 @@ package com.senatic.votesys.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,7 +25,7 @@ public class FileHandler {
 
 	public static List<AprendizPOJO> csvToList(MultipartFile csvFile) throws CsvParsingException {
 		try {
-			File newCsv = new File(csvFile.getOriginalFilename());
+			File newCsv = new File("src/main/java/com/senatic/votesys/utils/" + csvFile.getOriginalFilename());
 			csvFile.transferTo(newCsv);
 			MappingIterator<AprendizPOJO> aprendizDtoIter = new CsvMapper()
 					.readerWithTypedSchemaFor(AprendizPOJO.class)
@@ -35,11 +36,8 @@ public class FileHandler {
 			throw new CsvParsingException("hubo un error al intentar enviar su archivo csv");
 		}
 	}
-
-	public static List<Aprendiz> getAprendicesList(MultipartFile mpf) throws CsvParsingException {
-		csvToList(mpf);
-		return null;
-	}
+	
+	/*
 
 	// Trying something different
 	public static String TYPE = "text/csv";
@@ -59,11 +57,8 @@ public class FileHandler {
 		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 				CSVParser csvParser = new CSVParser(fileReader,
 						CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
-
 			List<AprendizPOJO> aprendicesPOJO = new ArrayList<AprendizPOJO>();
-
 			Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-
 			for (CSVRecord csvRecord : csvRecords) {
 				AprendizPOJO aprendizPOJO = new AprendizPOJO(
 						csvRecord.get("ficha"),
@@ -115,4 +110,5 @@ public class FileHandler {
 		}
 		return aprendicesPOJOs;
 	}
+	*/
 }

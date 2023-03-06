@@ -1,6 +1,11 @@
 package com.senatic.votesys.controller;
 
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Optional;
+
+import javax.sql.rowset.serial.SerialBlob;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -20,11 +25,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.Candidato;
-import com.senatic.votesys.model.dto.CandidatoDTO;
+import com.senatic.votesys.model.Imagen;
+import com.senatic.votesys.model.dto.CandidatoPOJO;
 import com.senatic.votesys.model.mapper.GenericMapper;
 import com.senatic.votesys.service.IAprendicesService;
 import com.senatic.votesys.service.ICandidatosService;
@@ -44,7 +51,7 @@ public class CandidatosController {
     private IVotacionesService votacionesService;
 
     @Autowired
-    private GenericMapper<CandidatoDTO, Candidato> genericMapper;
+    private GenericMapper<CandidatoPOJO, Candidato> genericMapper;
 
     @GetMapping("/view")
     public String getCandidatos(@RequestParam(defaultValue = "0") Integer page,
@@ -126,18 +133,30 @@ public class CandidatosController {
     }
 
     @GetMapping("/create")
-    public String createCandidatoForm(CandidatoDTO candidatoDTO){
+    public String createCandidatoForm(CandidatoPOJO candidatoPOJO){
         return "admin/candidatos/add";
     }
 
     @PostMapping("/create")
-    public String createCandidato(CandidatoDTO candidatoDTO, RedirectAttributes attributes, Model model){
-        Optional<Aprendiz> optional = aprendicesService.findById(candidatoDTO.getDocumento());
+    public String createCandidato(CandidatoPOJO candidatoPOJO, RedirectAttributes attributes, Model model, @RequestParam(required = false, value = "archivoImagen") MultipartFile file){
+        Optional<Aprendiz> optional = aprendicesService.findById(candidatoPOJO.getDocumento());
         if (optional.isEmpty()) {
             attributes.addFlashAttribute("msgDanger", "El documento proporcionado no corresponde a ningun aprendiz");
             return "redirect:/candidatos/create";
         }
-        Candidato candidato = genericMapper.map(candidatoDTO);
+        
+        Candidato candidato = genericMapper.map(candidatoPOJO);
+
+        if (!file.isEmpty()) {
+            Imagen imagen = new Imagen();
+        try {
+            Blob imageBlob = new SerialBlob(file.getBytes());
+            imagen.setImage(imageBlob);
+            candidato.setImagen(imagen);
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        }
         candidatosService.addCandidato(candidato);
         attributes.addFlashAttribute("msgDone", "Candidato guardado satisfactoriamente");
         return "redirect:/candidatos/view";

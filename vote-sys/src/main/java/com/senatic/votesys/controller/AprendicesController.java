@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.senatic.votesys.exception.CsvParsingException;
 import com.senatic.votesys.model.Aprendiz;
-import com.senatic.votesys.model.dto.AprendizDTO;
+import com.senatic.votesys.model.dto.AprendizPOJO;
 import com.senatic.votesys.model.mapper.GenericMapper;
 import com.senatic.votesys.service.IAprendicesService;
 import com.senatic.votesys.utils.FileHandler;
@@ -35,7 +35,7 @@ public class AprendicesController {
 	private IAprendicesService aprendicesService;
 
     @Autowired
-    private GenericMapper<AprendizDTO, Aprendiz> genericMapper;
+    private GenericMapper<AprendizPOJO, Aprendiz> genericMapper;
 	
     @GetMapping("/create/form")
     public String createAprendizForm(Aprendiz aprendiz, Model model){
@@ -43,7 +43,7 @@ public class AprendicesController {
     }
     
     @PostMapping("/create/form")
-    public String createAprendiz(AprendizDTO aprendiz, RedirectAttributes redirectAtt){
+    public String createAprendiz(AprendizPOJO aprendiz, RedirectAttributes redirectAtt){
         /*
         TO DO: 
         Recibir un aprendiz del form y guardarlo mediante el servicio correspondiente
@@ -67,7 +67,7 @@ public class AprendicesController {
     public String saveAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes attributes){
         System.out.println("ARCHIVO: " + csvFile.getOriginalFilename());
     	try {
-			List<AprendizDTO> aprendicesDTO = FileHandler.csvToList(csvFile); //Terminar fileHandler
+			List<AprendizPOJO> aprendicesDTO = FileHandler.csvToList(csvFile); //Terminar fileHandler
             if (!aprendicesDTO.isEmpty()) {
     aprendicesDTO.stream().forEach( aprendizDTO -> {
                     Aprendiz aprendiz = genericMapper.map(aprendizDTO);
@@ -122,7 +122,7 @@ public class AprendicesController {
     }
 
     @PostMapping("/update")
-    public String updateAprendiz(AprendizDTO aprendiz, RedirectAttributes redirectAtt){
+    public String updateAprendiz(AprendizPOJO aprendiz, RedirectAttributes redirectAtt){
         /*
         TO DO:
         Recibir un aprendiz como parametro y almacenarlo

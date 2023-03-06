@@ -1,9 +1,12 @@
 package com.senatic.votesys.controller;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -41,7 +44,7 @@ public class VotacionesController {
         Pageable paging = PageRequest.of(page, size);
         Page<Votacion> listVotaciones = votacionesService.getVotacionesPaginate(paging);
         model.addAttribute("votaciones", listVotaciones);
-        return "/admin/votaciones/list";
+        return "admin/votaciones/list";
     }
 
     @GetMapping("/search")
@@ -58,7 +61,7 @@ public class VotacionesController {
         Example<Votacion> example = Example.of(votacion, matcher);
         Page<Votacion> listVotaciones = votacionesService.getVotacionesPaginateByExample(paging, example);
         model.addAttribute("votaciones", listVotaciones);
-        return "/admin/votaciones/list";
+        return "admin/votaciones/list";
     }
 
     @GetMapping("/edit/{id}")
@@ -66,7 +69,7 @@ public class VotacionesController {
         Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
         if (optional.isPresent()) {
             model.addAttribute("votacion", optional.get());
-            return "/admin/votaciones/add";
+            return "admin/votaciones/add";
         } else {
             attributes.addFlashAttribute("msgDanger", "No existe la votación que intenta editar");
             return "redirect:/votaciones/view";
@@ -75,12 +78,26 @@ public class VotacionesController {
 
     @GetMapping("/create")
     public String createVotacion(Votacion votacion){
-        return "/admin/votaciones/add";
+        return "admin/votaciones/add";
     }
 
+    @GetMapping("/delete/{id}")
+    public String createVotacion(@PathVariable("id") Integer idVotacion, RedirectAttributes attribute){
+
+        Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
+        if (optional.isPresent()) {
+            votacionesService.deleteVotacion(optional.get());
+            attribute.addFlashAttribute("msgDone", "Votación eliminada satisfactoriamente");
+        } else {
+            attribute.addFlashAttribute("msgDanger", "No existe la votación que desea eliminar");
+        }
+        return "redirect:/votaciones/view";
+    }
     @PostMapping("/save")
     public String saveVotacion(Votacion votacion, RedirectAttributes attributes, Model model){
-        votacion.setEstado(EstadoVotacion.CREADA);
+        if (votacion.getEstado() == null) {
+            votacion.setEstado(EstadoVotacion.CREADA);
+        }
         votacionesService.addVotacion(votacion);
         attributes.addFlashAttribute("msgDone", "Votación guardada satisfactoriamente");
         return "redirect:/votaciones/view";
@@ -111,8 +128,10 @@ public class VotacionesController {
     }
 
 	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	public void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
 
     @ModelAttribute

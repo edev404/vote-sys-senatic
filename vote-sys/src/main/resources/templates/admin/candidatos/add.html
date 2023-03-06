@@ -20,8 +20,12 @@
     <header th:insert="~{/fragments/admin/header/headerAdmin :: header-admin}"></header>
 
     <div class="container mt-3 p-5">
-        <form class="d-lg-flex bg-light p-5" th:action="@{/candidatos/create}" th:object="${candidatoDTO}"
-            enctype="multipart/form-data">
+        <div th:if="${msgDanger != null}" class="alert alert-danger" th:text="${msgDanger}" role="alert">
+        </div>
+        <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
+        </div>
+        <form class="d-lg-flex bg-light p-5" th:action="@{/candidatos/create}" th:object="${candidatoPOJO}"
+            enctype="multipart/form-data" method="POST">
 
             <div class="row col-lg-4 bg-success p-5 rounded">
                 <img th:src="@{/images/logo.png}" alt="logo sena" style="height: 350px;" />
@@ -47,14 +51,14 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                         <label class="form-label" for="imagen">Imagen</label>
-                        <input type="file" class="form-control" name="imagen" id="imagen">
+                        <input type="file" class="form-control" name="archivoImagen" id="archivoImagen" required="true">
                     </div>
                 </div>
                 <div class="col-12 mb-3">
                     <label class="form-label" for="select">Votaciones:</label>
-                    <select th:each="votacion : ${votaciones}" class="form-select" aria-label="Default select example"
+                    <select class="form-select" aria-label="Default select example"
                         id="select" th:field="*{idVotacion}" name="idVotacion">
-                        <option th:text="${votacion.nombre}" th:value="${votacion.id}"></option>
+                        <option th:each="votacion : ${votaciones}" th:text="${votacion.nombre}" th:value="${votacion.id}"></option>
                     </select>
                 </div>
 

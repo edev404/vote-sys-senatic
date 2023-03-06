@@ -14,24 +14,25 @@
 <body>
     <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
     <div class="container mt-3 p-3">
-        <form class="d-lg-flex bg-light p-5" th:action="@{/votaciones/create}" th:object="${votacion}" method="POST">
+        <form class="d-lg-flex bg-light p-5" th:action="@{/votaciones/save}" th:object="${votacion}" method="POST">
             <div class="row col-lg-4 bg-success p-5 rounded">
                 <img th:src="@{/images/logo.png}" alt="logo sena" style="height: 350px;" />
             </div>
             <div class="row col-lg-8 m-auto g-3">
 
                 <div class="col-md-12">
+                    <input type="text" class="form-control" id="votacion" name="nombre" th:field="*{id}" style="display:none;">
                     <label class="form-label" for="votacion">Nombre:</label>
-                    <input type="text" class="form-control" id="votacion" name="nombre" th:field="*{nombre}">
+                    <input type="text" class="form-control" id="votacion" name="nombre" th:field="*{nombre}" required="required">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label" for="fecha">Fecha Terminación:</label>
-                    <input type="text" class="form-control" name="fecha" id="fecha" th:field="*{fecha}" placeholder="Fecha de terminacion" required="required">
+                    <label class="form-label" for="fecha">Fecha Terminación: (dd-mm-yy)</label>
+                    <input type="date" class="form-control" name="fecha" id="fecha" th:field="*{fechaTerminacion}" placeholder="Fecha de terminacion" required="required">
                 </div>
 
                 <div class="col-md-12">
                     <label class="form-label" for="descripcion">Descripción:</label>
-                    <textarea class="form-control" id="descripcion" rows="3" th:field="*{descripcion}"></textarea>
+                    <textarea class="form-control" id="descripcion" rows="3" th:field="*{descripcion}" required="required"></textarea>
                 </div>
 
                 <div class="col-12 d-flex justify-content-end">
@@ -48,7 +49,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
         $(function () {
-            $("#fecha").datepicker({dateFormat: 'dd-mm-yy'});
+            $("#fecha").datepicker({dateFormat: 'dd-mm-yyyy'});
           }
         );
       </script>

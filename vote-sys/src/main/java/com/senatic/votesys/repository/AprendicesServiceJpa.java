@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.senatic.votesys.model.Aprendiz;
-import com.senatic.votesys.model.dto.AprendizDTO;
+import com.senatic.votesys.model.dto.AprendizPOJO;
 import com.senatic.votesys.repository.bd.AprendicesRepository;
 import com.senatic.votesys.service.IAprendicesService;
 
@@ -41,7 +41,7 @@ public class AprendicesServiceJpa implements IAprendicesService{
 	}
 	
 	@Override
-	public boolean updateAprendiz(AprendizDTO aprendizDTO) {
+	public boolean updateAprendiz(AprendizPOJO aprendizDTO) {
 		//CORREGIR
 		/*
 		TO DO:

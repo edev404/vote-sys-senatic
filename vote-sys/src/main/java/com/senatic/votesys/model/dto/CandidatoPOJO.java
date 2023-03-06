@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CandidatoDTO {
+public class CandidatoPOJO {
     
     private String documento;
     private MultipartFile imagen;

@@ -17,11 +17,11 @@
     <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
     <div class="container mt-5">
 
+        <a class="btn btn-primary" th:href="@{/candidatos/create}"
+                    title="Crear nuevo candidato" role="button"><i
+                    class="fas fa-file" aria-hidden="true"></i> Crear candidato
+        </a>
         <div class="row mb-3">
-            <a class="btn btn-primary" th:href="@{/candidatos/create}"
-						title="Crear nueva Oferta de Trabajo" role="button"><i
-						class="fas fa-file" aria-hidden="true"></i> Crear candidato
-            </a>
             <div th:if="${msgDanger != null}" class="alert alert-danger" th:text="${msgDanger}" role="alert">
             </div>
             <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
@@ -35,8 +35,8 @@
                         </label>
                         <div class="d-flex gap-2">
                             <div class="col-12 mb-3">
-                                <select th:each="votacion : ${votaciones}" class="form-select" aria-label="Default select example" id="select" th:field="*{idVotacion}" name="idVotacion">
-                                    <option th:text="${votacion.nombre}" th:value="${votacion.id}"></option>
+                                <select class="form-select" aria-label="Default select example" id="select" th:field="*{votacion.id}" name="idVotacion">
+                                    <option th:each="votacion : ${votaciones}" th:text="${votacion.nombre}" th:value="${votacion.id}"></option>
                                 </select>
                             </div>
                             <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
@@ -61,7 +61,8 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr>
+                    <tr th:each="candidato : ${candidatos}">
+                        <span th:if="${candidatos.isEmpty}" th:text=" 'No existen registros disponibles' "></span>
                         <td scope="row" th:text="${candidato.aprendiz.id}"></td>
                         <td>
                             <img alt="img" th:src="data:image/jpeg;base64,${candidato.imagen.image}"width="70" height="70">

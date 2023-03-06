@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.Perfil;
 import com.senatic.votesys.model.Usuario;
-import com.senatic.votesys.model.dto.AprendizDTO;
+import com.senatic.votesys.model.dto.AprendizPOJO;
 import com.senatic.votesys.model.enums.EstadoAprendiz;
 import com.senatic.votesys.service.IPerfilesService;
 
 @Service
 @Primary
-public class AprendizDTOtoAprendiz implements GenericMapper<AprendizDTO, Aprendiz>{
+public class AprendizPOJOtoAprendiz implements GenericMapper<AprendizPOJO, Aprendiz>{
 
     @Autowired
     private IPerfilesService perfilesService;
@@ -25,25 +25,25 @@ public class AprendizDTOtoAprendiz implements GenericMapper<AprendizDTO, Aprendi
 	private PasswordEncoder passwordEncoder;
 
     @Override
-    public Aprendiz map(AprendizDTO dto) {
+    public Aprendiz map(AprendizPOJO pojo) {
 
         Aprendiz aprendiz = new Aprendiz();
 
         //Generic fields
-        aprendiz.setId(dto.getNumeroDocumento());
-        aprendiz.setNombre(dto.getNombre());
-        aprendiz.setApellido(dto.getApellido());
-        aprendiz.setCelular(dto.getCelular());
-        aprendiz.setFicha(dto.getFicha());
-        aprendiz.setPrograma(dto.getPrograma());
-        aprendiz.setTipoDocumento(dto.getTipoDocumento());
-        aprendiz.setEstado(dto.getEstado().equalsIgnoreCase("EN FORMACION") ? EstadoAprendiz.EN_FORMACION : EstadoAprendiz.CANCELADO);
-        aprendiz.setCorreoElectronico(dto.getCorreoElectronico());
+        aprendiz.setId(pojo.getNumeroDocumento());
+        aprendiz.setNombre(pojo.getNombre());
+        aprendiz.setApellido(pojo.getApellido());
+        aprendiz.setCelular(pojo.getCelular());
+        aprendiz.setFicha(pojo.getFicha());
+        aprendiz.setPrograma(pojo.getPrograma());
+        aprendiz.setTipoDocumento(pojo.getTipoDocumento());
+        aprendiz.setEstado(pojo.getEstado().equalsIgnoreCase("EN FORMACION") ? EstadoAprendiz.EN_FORMACION : EstadoAprendiz.CANCELADO);
+        aprendiz.setCorreoElectronico(pojo.getCorreoElectronico());
 
         //Aprendiz Usuario fields
         Usuario usuario = new Usuario();
-        usuario.setUsername(dto.getNumeroDocumento());
-        usuario.setPassword(passwordEncoder.encode(dto.getNumeroDocumento()));
+        usuario.setUsername(pojo.getNumeroDocumento());
+        usuario.setPassword(passwordEncoder.encode(pojo.getNumeroDocumento()));
         usuario.setFechaRegistro(new Date());
 
         //Usuario's perfil fields

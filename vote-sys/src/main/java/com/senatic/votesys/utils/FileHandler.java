@@ -10,16 +10,16 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.senatic.votesys.exception.CsvParsingException;
 import com.senatic.votesys.model.Aprendiz;
-import com.senatic.votesys.model.dto.AprendizDTO;
+import com.senatic.votesys.model.dto.AprendizPOJO;
 
 public class FileHandler {
 	
-	public static List<AprendizDTO> csvToList(MultipartFile csvFile) throws CsvParsingException{
+	public static List<AprendizPOJO> csvToList(MultipartFile csvFile) throws CsvParsingException{
 		try {
 			File newCsv = new File(csvFile.getOriginalFilename());
 			csvFile.transferTo(newCsv);
-			MappingIterator<AprendizDTO> aprendizDtoIter = new CsvMapper()
-					.readerWithTypedSchemaFor(AprendizDTO.class)
+			MappingIterator<AprendizPOJO> aprendizDtoIter = new CsvMapper()
+					.readerWithTypedSchemaFor(AprendizPOJO.class)
 					.readValues(newCsv);
 			return aprendizDtoIter.readAll();
 		} catch (IllegalStateException | IOException e) {

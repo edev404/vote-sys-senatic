@@ -17,20 +17,27 @@
 <body>
     <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
     <div class="container mt-5">
-
+        <a class="btn btn-primary" th:href="@{/votaciones/create}"
+        title="Crear nueva votacion" role="button"><i
+        class="fas fa-file" aria-hidden="true"></i> Crear votacion
+        </a>
         <div class="container my-3">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
+                    <div th:if="${msgDanger != null}" class="alert alert-danger" th:text="${msgDanger}" role="alert">
+                    </div>
+                    <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
+                    </div>
                     <form class="d-flex flex-column gap-2 flex-lg-row align-items-center justify-content-lg-between"
                         method="get" th:action="@{/votaciones/search}">
                         <div class="input-group mb-3 mb-lg-0">
                             <label for="search" class="input-group-text me-2">Título:</label>
                             <input name="nombre" class="form-control" type="text" placeholder="Buscar"
-                                aria-label="Buscar">
+                                aria-label="Buscar" required="required">
                         </div>
                         <div class="input-group mb-3 mb-lg-0">
                             <label for="estado" class="input-group-text me-2">Estado:</label>
-                            <select name="estado" id="estado" class="form-select">
+                            <select name="estado" id="estado" class="form-select" required="required">
                                 <option selected value="null">Seleccionar</option>
                                 <option value="CREADA">Creada</option>
                                 <option value="ABIERTA">Abierta</option>
@@ -48,7 +55,7 @@
                 <thead class="table-success text-center">
                     <tr>
                         <!-- Agregar un identificador único a la columna que deseamoa filtrar. utilizaremos el identificador "votacion" para la columna votacion: -->
-                        <th scope="col" display:none>Id</th>
+                        <th scope="col" style="display:none;">Id</th>
                         <th scope="col" id="votacion">Nombre</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Fecha Terminacion</th>
@@ -57,20 +64,20 @@
                 </thead>
                 <tbody class="text-center">
                     <tr th:each="votacion : ${votaciones}">
-                        <td display:none scope="row" th:text="${votacion.id}"></td>
+                        <td style="display:none;" scope="row" th:text="${votacion.id}"></td>
                         <td th:text="${votacion.nombre}"></td>
-                        <td th:text="${votacion.estado.toString}"></td>
-                        <td th:text="${votacion.fechaTerminacion}"></td>
-                        <td>
+                        <td th:text="${votacion.estado}"></td>
+                        <td th:text="${#dates.format(votacion.fechaTerminacion, 'dd-MM-yyyy')}"></td>
+                        <td th:with="EstadoVotacion=${T(com.senatic.votesys.model.enums.EstadoVotacion)}">
                             <a th:href="@{/votaciones/edit/{id} (id=${votacion.id})}" class="btn btn-success btn-sm"
                                 role="button" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                             <a th:href="@{/votaciones/delete/{id} (id=${votacion.id})}"
                                 class="btn btn-success btn-sm confirmar" role="button" title="Eliminar"><i
                                     class="fas fa-trash" aria-hidden="true"></i></a>
-                            <a th:if="${votacion.estatus.toString == 'ABIERTA'}"
+                            <a th:if="${votacion.estado == EstadoVotacion.ABIERTA.toString()}"
                                 th:href="@{/votaciones/open/{id} (id=${votacion.id})}" class="btn btn-success btn-sm"
                                 role="button" title="Cerrar votación"><i class="fas fa-lock" aria-hidden="true"></i></a>
-                            <a th:if="${votacion.estatus.toString == 'CERRADA'}"
+                            <a th:if="${votacion.estado == EstadoVotacion.CERRADA.toString()}"
                                 th:href="@{/votaciones/close/{id} (id=${votacion.id})}" class="btn btn-success btn-sm"
                                 role="button" title="Abrir votación"><i class="fas fa-unlock" aria-hidden="true"></i></a>
                         </td>

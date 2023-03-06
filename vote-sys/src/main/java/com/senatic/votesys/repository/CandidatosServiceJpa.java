@@ -1,6 +1,7 @@
 package com.senatic.votesys.repository;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.senatic.votesys.model.Candidato;
+import com.senatic.votesys.model.enums.EstadoCandidato;
 import com.senatic.votesys.repository.bd.CandidatosRepository;
 import com.senatic.votesys.service.ICandidatosService;
 
@@ -61,6 +63,11 @@ public class CandidatosServiceJpa implements ICandidatosService{
     @Override
     public void deleteCandidatoById(Integer idCandidato) {
         candidatosRepository.deleteById(idCandidato);
+    }
+
+    @Override
+    public List<Candidato> getCandidatosByVotacionAndEstado(Integer idVotacion, EstadoCandidato estado) {
+        return null;
     }
    
     

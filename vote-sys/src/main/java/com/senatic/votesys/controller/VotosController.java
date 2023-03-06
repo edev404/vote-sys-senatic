@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.senatic.votesys.service.IVotosService;
@@ -17,8 +16,8 @@ public class VotosController {
     @Autowired
     private IVotosService votosService;
     
-    @PatchMapping("/{idAprendiz}/vote-by")
-    public String saveVoto(@RequestParam("candidato") Integer idCandidato,
+    @PatchMapping("/{idAprendiz}/vote-by/{idCandidato}")
+    public String saveVoto(@PathVariable("idCandidato") Integer idCandidato,
                             @PathVariable("idAprendiz") String idAprendiz,
                             RedirectAttributes attributes){
 

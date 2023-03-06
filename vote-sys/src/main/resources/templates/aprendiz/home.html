@@ -1,6 +1,6 @@
 <!-- Vista para el home del rol "aprendiz -->
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -9,36 +9,37 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Aprendiz</title>
+    <title>Sistema de votación: Home - Aprendiz</title>
 </head>
 <body>
+    <header th:insert="~{fragments/aprendiz/header/headerAprendiz :: header-aprendiz}"></header>
     <div class="container mt-5">
         <div class="row mb-3">
-            <form class="form-inline" method="get">
+            <form class="form-inline" method="get" th:action="@{/home/aprendiz/search}" th:object="${search}">
                 <div class="col-12">
-                    <label for="search" class="form-label">Introduzca un nombre de votacion para visualizar Candidatos:
-                        <input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
-                    </label>
+                    <label for="search" class="form-label">Seleccione la votacion para visualizar Candidatos:</label>
+                    <select th:each="votacion : ${votaciones}" class="form-select" aria-label="Default select example" id="select" th:field="*{id}" name="idVotacion">
+                        <option th:text="${votacion.nombre}" th:value="${votacion.id}"></option>
+                    </select>
                     <button class="btn btn-success" type="submit">Buscar</button>
                 </div>
             </form>
         </div>
-
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <!-- Con este card pintas las demas son responsive -->
             <div class="col">
-                <div class="card">
-                    <img src="https://pps.whatsapp.net/v/t61.24694-24/324038090_771767760979608_6135570868240330168_n.jpg?ccb=11-4&oh=01_AdRbt6hY67RAlHmo5wT01u5x4uCbvBgovV33OWFCBkSyyw&oe=640E1499" class="card-img-top" alt="..." width="100" heigth="600">
+                <div class="card" th:each="candidato : ${candidatos}">
+                    <img th:src="data:image/jpeg;base64,${candidato.imagen.image}" class="card-img-top" alt="foto candidato" width="75" heigth="450">
                     <div class="card-body">
-                        <h5 class="card-title">Eduardo Ramirez</h5>
+                        <h5 class="card-title" th:text="${candidato.aprendiz.nombre} + ' ' + ${candidato.aprendiz.apellido}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted">2503106</h6>
                         <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-primary">Detalles del candidato</a>
-                            <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Vota por mi">
+                            <a th:href="@{/candidatos/details/{id} (id=${candidato.id})}" class="btn btn-primary">Detalles del candidato</a>
+                            <a th:href="@{/votos/{idAprendiz}/vote-by/{idCandidato}  (idAprendiz=${authentication.name}) (idCandidato=${candidato.id})}" class="btn" role="button"data-bs-toggle="tooltip" data-bs-placement="top" title="Vota por mi">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-envelope-paper-fill" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M6.5 9.5 3 7.5v-6A1.5 1.5 0 0 1 4.5 0h7A1.5 1.5 0 0 1 13 1.5v6l-3.5 2L8 8.75l-1.5.75ZM1.059 3.635 2 3.133v3.753L0 5.713V5.4a2 2 0 0 1 1.059-1.765ZM16 5.713l-2 1.173V3.133l.941.502A2 2 0 0 1 16 5.4v.313Zm0 1.16-5.693 3.337L16 13.372v-6.5Zm-8 3.199 7.941 4.412A2 2 0 0 1 14 16H2a2 2 0 0 1-1.941-1.516L8 10.072Zm-8 3.3 5.693-3.162L0 6.873v6.5Z"/>
                                 </svg>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

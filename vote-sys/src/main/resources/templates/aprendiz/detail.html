@@ -1,6 +1,6 @@
 <!-- Vista para el detalle del aprendiz -->
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -12,9 +12,10 @@
     <title>Details aprendiz</title>
 </head>
 <body>
+    <header th:insert="~{fragments/aprendiz/header/headerAprendiz :: header-aprendiz}"></header>
     <div class="container mt-5 w-100 d-flex flex-lg-wrap">
         <div class="row w-50">
-            <img src="https://pps.whatsapp.net/v/t61.24694-24/324038090_771767760979608_6135570868240330168_n.jpg?ccb=11-4&oh=01_AdRbt6hY67RAlHmo5wT01u5x4uCbvBgovV33OWFCBkSyyw&oe=640E1499" class="img-fluid p-0" alt="...">
+            <img src="https://pps.whatsapp.net/v/t61.24694-24/324038090_771767760979608_6135570868240330168_n.jpg?ccb=11-4&oh=01_AdRbt6hY67RAlHmo5wT01u5x4uCbvBgovV33OWFCBkSyyw&oe=640E1499" class="img-fluid p-0" alt="logo candidato">
         </div>
 
         <div class="row w-50 bg-dark">

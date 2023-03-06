@@ -14,6 +14,7 @@ import com.senatic.votesys.model.Usuario;
 import com.senatic.votesys.model.dto.AprendizPOJO;
 import com.senatic.votesys.model.enums.EstadoAprendiz;
 import com.senatic.votesys.service.IPerfilesService;
+import com.senatic.votesys.service.IUsuariosService;
 
 @Service
 @Primary
@@ -21,6 +22,10 @@ public class AprendizPOJOtoAprendiz implements GenericMapper<AprendizPOJO, Apren
 
     @Autowired
     private IPerfilesService perfilesService;
+
+    @Autowired
+    private IUsuariosService usuariosService;
+
     @Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -45,6 +50,8 @@ public class AprendizPOJOtoAprendiz implements GenericMapper<AprendizPOJO, Apren
         usuario.setUsername(pojo.getNumeroDocumento());
         usuario.setPassword(passwordEncoder.encode(pojo.getNumeroDocumento()));
         usuario.setFechaRegistro(new Date());
+
+        usuariosService.addUsuario(usuario);
 
         //Usuario's perfil fields
         Perfil perfil = perfilesService.getPerfil("APRENDIZ").get();

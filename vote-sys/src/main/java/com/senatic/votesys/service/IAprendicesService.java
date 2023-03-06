@@ -1,5 +1,6 @@
 package com.senatic.votesys.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -9,9 +10,10 @@ import com.senatic.votesys.model.dto.AprendizPOJO;
 
 public interface IAprendicesService {
 	Page<Aprendiz> getAprendicesPaginate(Pageable paging);
-    boolean addAprendiz(Aprendiz aprendiz);
+    void addAprendiz(Aprendiz aprendiz);
 	void deleteById(String idAprendiz);
 	Optional<Aprendiz> findById(String id);
 	boolean updateAprendiz(AprendizPOJO aprendizPOJO);
 	Optional<Aprendiz> getAprendizById(String idAprendiz);
+	void addAprendices(List<Aprendiz> aprendices);
 }

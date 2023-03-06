@@ -22,5 +22,10 @@ public class UsuariosServiceJpa implements IUsuariosService{
         return usuariosRepository.findByUsername(username);
     }
 
+    @Override
+    public void addUsuario(Usuario usuario) {
+        usuariosRepository.save(usuario);
+    }
+
    
 }

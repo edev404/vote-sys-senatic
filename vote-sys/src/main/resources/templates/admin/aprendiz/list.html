@@ -49,8 +49,8 @@
                 </thead>
                 <tbody class="text-center">
                     <tr th:each="aprendiz : ${aprendices}">
-                        <th scope="row" th:text="${aprendiz.documento}"></th>
-                        <td th:text="${aprendiz.fichaPrograma}"></td>
+                        <th scope="row" th:text="${aprendiz.id}"></th>
+                        <td th:text="${aprendiz.ficha}"></td>
                         <td th:text="${aprendiz.nombre} + ' ' + ${aprendiz.apellido}"></td>
                         <td th:text="${aprendiz.correoElectronico}"></td>
                         <td th:text="${aprendiz.celular}"></td>
@@ -74,6 +74,24 @@
                 </tbody>
             </table>
         </div>
+        <nav th:if="${aprendices.totalPages > 0}" aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${aprendices.number == 0 ? 'disabled' : ''}">
+                    <a th:href="@{/aprendices/view(page=${aprendices.number - 1})}" class="page-link">Anterior</a>
+                </li>
+
+                <li class="page-item" th:classappend="${i eq aprendices.number + 1} ? 'active'"
+                    th:each="i : ${#numbers.sequence( 1, aprendices.totalPages, 1)}">
+                    <a class="page-link" th:href="@{/aprendices/view?page={id}(id=${i -1})}" th:text="${i}"
+                        th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                </li>
+
+                <li class="page-item"
+                    th:classappend="${aprendices.number == (aprendices.totalPages - 1) ? 'disabled' : ''}">
+                    <a th:href="@{/aprendices/view(page=${aprendices.number + 1})}" class="page-link">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
 
     </div>
     <!-- Option 1: Bootstrap Bundle with Popper -->

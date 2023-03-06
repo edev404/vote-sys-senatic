@@ -1,5 +1,6 @@
 package com.senatic.votesys.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class AprendicesServiceJpa implements IAprendicesService{
 	}
 
 	@Override
-	public boolean addAprendiz(Aprendiz aprendiz) {
-		return true;
+	public void addAprendiz(Aprendiz aprendiz) {
+		aprendicesRepository.save(aprendiz);
 	}
 	
 	@Override
@@ -58,6 +59,11 @@ public class AprendicesServiceJpa implements IAprendicesService{
 	@Override
 	public Optional<Aprendiz> getAprendizById(String idAprendiz) {
 		return aprendicesRepository.findById(idAprendiz);
+	}
+
+	@Override
+	public void addAprendices(List<Aprendiz> aprendices) {
+		aprendicesRepository.saveAll(aprendices);
 	}
 	
 	

@@ -14,9 +14,13 @@
 <body>
     <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
     <div class="container mt-3 p-5">
-        <form class="d-lg-flex bg-light p-5">
+        <div th:if="${msgDanger != null}" class="alert alert-danger" th:text="${msgDanger}" role="alert">
+        </div>
+        <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
+        </div>
+        <form class="d-lg-flex bg-light p-5" th:action="@{/aprendices/create/form}" method="post">
             <div class="row col-lg-4 bg-success p-5 rounded">
-                <img src="../../../static/logo.png" alt="..." style="height: 350px;" />
+                <img th:src="@{/images/logo.png}" alt="logo sena" style="height: 350px;" />
             </div>
             <div class="row col-lg-8 m-auto p-3">
                 <div class="col-lg-6">
@@ -47,7 +51,7 @@
                 <div class="col-12">
                     <div class="mb-3">
                         <label for="ficha-number" class="form-check-label">Nombre del programa:</label>
-                        <input type="number" class="form-control" id="ficha-number" required="required" />
+                        <input type="text" class="form-control" id="ficha-number" required="required" />
                     </div>
                 </div>
                 <div class="col-12">

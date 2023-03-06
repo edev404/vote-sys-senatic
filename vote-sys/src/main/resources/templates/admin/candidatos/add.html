@@ -18,12 +18,11 @@
 
 
     <header th:insert="~{/fragments/admin/header/headerAdmin :: header-admin}"></header>
-
+    <div th:if="${msgDanger != null}" class="alert alert-danger" th:text="${msgDanger}" role="alert">
+    </div>
+    <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
+    </div>
     <div class="container mt-3 p-5">
-        <div th:if="${msgDanger != null}" class="alert alert-danger" th:text="${msgDanger}" role="alert">
-        </div>
-        <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
-        </div>
         <form class="d-lg-flex bg-light p-5" th:action="@{/candidatos/create}" th:object="${candidatoPOJO}"
             enctype="multipart/form-data" method="POST">
 
@@ -51,7 +50,7 @@
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
                         <label class="form-label" for="imagen">Imagen</label>
-                        <input type="file" class="form-control" name="archivoImagen" id="archivoImagen" required="true">
+                        <input type="file" class="form-control" name="archivoImagen" id="archivoImagen" required="true" th:field="*{imagen}">
                     </div>
                 </div>
                 <div class="col-12 mb-3">

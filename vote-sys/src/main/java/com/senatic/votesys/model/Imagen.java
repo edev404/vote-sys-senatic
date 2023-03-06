@@ -1,11 +1,12 @@
 package com.senatic.votesys.model;
 
-import java.sql.Blob;
 
+
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,11 @@ import lombok.ToString;
 public class Imagen {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
-    private Blob image;
+    @Column(length = 10)
+    private String id;
+    @Lob
+	@Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
+
+    
 }

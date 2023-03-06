@@ -65,7 +65,7 @@
                         <span th:if="${candidatos.isEmpty}" th:text=" 'No existen registros disponibles' "></span>
                         <td scope="row" th:text="${candidato.aprendiz.id}"></td>
                         <td>
-                            <img alt="img" th:src="data:image/jpeg;base64,${candidato.imagen.image}"width="70" height="70">
+                            <img th:if="${candidato.imagen.id != null}" alt="img" th:src="*{'data:image/jpeg;base64,'+{candidato.imagen.image}}" width="70" height="70">
                         </td>
                         <td th:text="${candidato.aprendiz.nombre} + ' ' + ${candidato.aprendiz.apellido}"></td>
                         <td th:text="${candidato.votacion.nombre}"></td>

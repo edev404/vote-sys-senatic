@@ -82,7 +82,7 @@ public class AprendicesController {
 
     @GetMapping("/view")
     public String getAprendices(@RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "5") Integer size,
+            @RequestParam(defaultValue = "6") Integer size,
             org.springframework.ui.Model model) {
         // TO DO: Desplegar lista de aprendices en la vista
         /*

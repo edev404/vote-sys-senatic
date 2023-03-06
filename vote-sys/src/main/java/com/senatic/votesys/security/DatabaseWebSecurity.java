@@ -16,10 +16,37 @@ public class DatabaseWebSecurity {
     
     @Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+		/*
+		http
+				.authorizeHttpRequests()
+
+				// Los recursos estáticos no requieren autenticación
+				.requestMatchers("/images/**", "/css/**", "/images/**").permitAll()
+
+				// Las vistas públicas no requieren autenticación
+				.requestMatchers("/bcrypt/**")
+				.permitAll()
+
+				// Asignar permisos a URLs por ROLES
+				.requestMatchers("/home/aprendiz/search", "/home/aprendiz/" , "/votos/**").hasAnyAuthority("APRENDIZ")
+				.requestMatchers("/aprendices/**", "/candidatos/**", "/votaciones/**", "/home/administrador").hasAnyAuthority("ADMINISTRADOR")
+
+				// Todas las demás URLs de la Aplicación requieren autenticación
+				.anyRequest().authenticated()
+
+				// El formulario de Login no requiere autenticacion
+				.and().formLogin().permitAll().and().logout().permitAll();
+		
+		return http.build();
+		 */
+
+
 		http
 				.authorizeHttpRequests()
 				.anyRequest().permitAll();
 		return http.build();
+
 	}
 
 	@Bean UserDetailsManager users(DataSource dataSource) {

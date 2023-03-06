@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -36,6 +37,11 @@ public class AprendicesController {
     @Autowired
     private GenericMapper<AprendizDTO, Aprendiz> genericMapper;
 	
+    @GetMapping("/create/form")
+    public String createAprendizForm(Aprendiz aprendiz, Model model){
+        return "redirect:/aprendices/view";
+    }
+    
     @PostMapping("/create/form")
     public String createAprendiz(AprendizDTO aprendiz, RedirectAttributes redirectAtt){
         /*
@@ -54,11 +60,7 @@ public class AprendicesController {
 
     @GetMapping("/create/upload")
     public String createAprendicesByCSV(){
-        /*
-        TO DO:
-        Retornar vista para subir archivo
-         */
-        return "";
+        return "admin/aprendiz/upload";
     }
 
     @PostMapping("/create/upload")
@@ -104,7 +106,7 @@ public class AprendicesController {
     }
 
     @GetMapping("/update/{id}")
-    public String updateAprendizView(@PathVariable("id") String id, org.springframework.ui.Model model){
+    public String updateAprendizView(@PathVariable("id") String id, Model model){
         /*
         TO DO:
         Retornar el formulario de aprendiz con todos los datos correspondientes al aprendiz del id

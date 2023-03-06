@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.senatic.votesys.model.Votacion;
+import com.senatic.votesys.model.enums.EstadoVotacion;
 import com.senatic.votesys.repository.bd.VotacionesRepository;
 import com.senatic.votesys.service.IVotacionesService;
 
@@ -65,5 +66,10 @@ public class VotacionesServiceJpa implements IVotacionesService{
     @Override
     public Optional<Votacion> getVotacionById(Integer idVotacion) {
         return votacionesJpa.findById(idVotacion);
+    }
+
+    @Override
+    public List<Votacion> getVotacionesByEstado(EstadoVotacion estado) {
+        return null;
     }
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,11 @@ public class AprendicesServiceJpa implements IAprendicesService{
 	@Override
 	public Optional<Aprendiz> getAprendizById(String idAprendiz) {
 		return aprendicesRepository.findById(idAprendiz);
+	}
+	
+	@Override
+	public Page<Aprendiz> getAprendicesPaginateByExample(Pageable paging, Example<Aprendiz> example) {
+		return aprendicesRepository.findAll(example, paging);
 	}
 
 	@Override

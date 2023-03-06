@@ -37,6 +37,13 @@ public class FileHandler {
 		}
 	}
 	
+	public static boolean isCsv(MultipartFile mpf) {
+		if(mpf.getOriginalFilename().endsWith(".csv")) {
+			return true;
+		}
+		return false;
+	}
+	
 	/*
 
 	// Trying something different

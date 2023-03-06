@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.senatic.votesys.exception.CsvParsingException;
 import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.dto.AprendizPOJO;
 import com.senatic.votesys.model.mapper.GenericMapper;
@@ -63,20 +64,22 @@ public class AprendicesController {
     @PostMapping("/create/upload")
     public String saveAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes attributes) {
         List<AprendizPOJO> aprendicesPOJO = new ArrayList<>();
-        if (FileHandler.hasCSVFormat(csvFile)) {
-            try {
-                aprendicesPOJO = FileHandler.csvToAprendizPOJOs(csvFile);
-            } catch (Exception e) {
-                //throw new RuntimeException("fail to store csv data: " + e.getMessage());
+        if(FileHandler.isCsv(csvFile)) {
+        	try {
+    			aprendicesPOJO = FileHandler.csvToList(csvFile);
+    		} catch (CsvParsingException e) {
+    			attributes.addFlashAttribute("msgDanger", e.getMessage());
+    		}
+            if (!aprendicesPOJO.isEmpty()) {
+               List<Aprendiz> aprendices = aprendicesPOJO.stream().map(aprendizDTO -> genericMapper.map(aprendizDTO)).toList();
+               aprendicesService.addAprendices(aprendices);
+            } else {
+                attributes.addFlashAttribute("msgDanger", "El csv no contiene registros");
             }
+            attributes.addFlashAttribute("msgDone", "Todos los registros guardados exitosamente");
+        }else {
+        	attributes.addFlashAttribute("msgDanger", "el unico formato soportado es csv...");
         }
-        if (!aprendicesPOJO.isEmpty()) {
-           List<Aprendiz> aprendices = aprendicesPOJO.stream().map(aprendizDTO -> genericMapper.map(aprendizDTO)).toList();
-           aprendicesService.addAprendices(aprendices);
-        } else {
-            attributes.addFlashAttribute("msgDanger", "El csv no contiene registros");
-        }
-        attributes.addFlashAttribute("msgDone", "Todos los registros guardados exitosamente");
         return "redirect:/aprendices/view";
     }
 
@@ -102,8 +105,13 @@ public class AprendicesController {
          * Eliminar al aprendiz por id y redirigir a la vista de la lista de aprendices
          * Enviar mensaje de confirmación
          */
-        aprendicesService.deleteById(id);
-        redirectAtt.addFlashAttribute("msg", "borrado exitosamente");
+    	Optional<Aprendiz> aprendizOpt = aprendicesService.findById(id);
+    	if(aprendizOpt.isPresent()) {
+    		aprendicesService.deleteById(id);
+    		redirectAtt.addFlashAttribute("msg", "borrado exitosamente");
+    	}else {
+    		redirectAtt.addFlashAttribute("msg", "no existe tal aprendiz que desea borrar");
+    	}
         return "redirect:/aprendices/view";
     }
 
@@ -115,7 +123,7 @@ public class AprendicesController {
          * aprendiz del id
          */
         model.addAttribute("aprendiz", aprendicesService.findById(id).get());
-        return "admin/add-aprendiz/form";
+        return "admin/add-aprendiz/edit";
     }
 
     @PostMapping("/update")

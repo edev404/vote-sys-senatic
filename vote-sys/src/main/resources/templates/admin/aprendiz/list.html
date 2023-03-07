@@ -28,12 +28,12 @@
                         method="get" th:action="@{/aprendices/search}" th:object="${search}">
                             <div class="input-group mb-3 mb-lg-0">
                                 <label for="search1" class="input-group-text me-2">Ficha del grupo:</label>
-                                <input class="form-control mr-sm-2 flex-grow-1" type="text" placeholder="Ficha">
+                                <input class="form-control mr-sm-2 flex-grow-1" type="text" placeholder="Ficha" th:field="*{ficha}">
                             </div>
                             <div class="input-group mb-3 mb-lg-0">
                                 <label for="search2" class="input-group-text me-2">Documento de identidad:</label>
                                 <input class="form-control mr-sm-2 flex-grow-1" type="text" placeholder="Documento"
-                                    aria-label="Buscar" id="search2">
+                                    aria-label="Buscar" id="search2" th:field="*{id}">
                             </div>
                             <button class="btn btn-success  mt-3 mt-lg-0" type="submit">Buscar</button>
                     </form>

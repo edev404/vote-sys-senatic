@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -94,6 +96,18 @@ public class AprendicesController {
         return "admin/aprendiz/list";
     }
 
+    @GetMapping("/search")
+    public String aprendicesFilter(@RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "5") Integer size,
+            org.springframework.ui.Model model,
+            @ModelAttribute("search") Aprendiz aprendiz) {
+        Example<Aprendiz> example = Example.of(aprendiz);
+        Pageable paging = PageRequest.of(page, size);
+        Page<Aprendiz> listAprendices = aprendicesService.getAprendicesPaginateByExample(paging, example);
+        model.addAttribute("aprendices", listAprendices);
+        return "admin/aprendiz/list";
+    }
+
     @GetMapping("/delete/{id}")
     public String deleteAprendizById(@PathVariable("id") String id, RedirectAttributes redirectAtt) {
         Optional<Aprendiz> aprendizOpt = aprendicesService.findById(id);
@@ -128,5 +142,10 @@ public class AprendicesController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+    }
+
+    @ModelAttribute
+    public void setGenerics(Model model){
+        model.addAttribute("search", new Aprendiz());
     }
 }

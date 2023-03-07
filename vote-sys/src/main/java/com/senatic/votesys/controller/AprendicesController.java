@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.senatic.votesys.exception.CsvParsingException;
 import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.dto.AprendizPOJO;
 import com.senatic.votesys.model.mapper.GenericMapper;
@@ -39,7 +38,7 @@ public class AprendicesController {
     private GenericMapper<AprendizPOJO, Aprendiz> genericMapper;
 
     @GetMapping("/create/form")
-    public String createAprendizForm(Aprendiz aprendiz, Model model) {
+    public String createAprendizForm(AprendizPOJO aprendizPOJO, Model model) {
         return "admin/aprendiz/form";
     }
 
@@ -65,11 +64,7 @@ public class AprendicesController {
     public String saveAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes attributes) {
         List<AprendizPOJO> aprendicesPOJO = new ArrayList<>();
         if (FileHandler.isCsv(csvFile)) {
-            try {
-                aprendicesPOJO = FileHandler.csvToList(csvFile);
-            } catch (CsvParsingException e) {
-                e.printStackTrace();
-            }
+            aprendicesPOJO = FileHandler.csvToAprendizPOJOs(csvFile);
             if (!aprendicesPOJO.isEmpty()) {
                 List<Aprendiz> aprendices = aprendicesPOJO.stream().map(aprendizDTO -> genericMapper.map(aprendizDTO))
                         .toList();
@@ -79,7 +74,7 @@ public class AprendicesController {
             }
             attributes.addFlashAttribute("msgDone", "Todos los registros guardados exitosamente");
         } else {
-            attributes.addFlashAttribute("msgDanger", "el unico formato soportado es csv...");
+            attributes.addFlashAttribute("msgDanger", "El unico formato soportado es csv...");
         }
         return "redirect:/aprendices/view";
     }
@@ -101,11 +96,6 @@ public class AprendicesController {
 
     @GetMapping("/delete/{id}")
     public String deleteAprendizById(@PathVariable("id") String id, RedirectAttributes redirectAtt) {
-        /*
-         * TO DO:
-         * Eliminar al aprendiz por id y redirigir a la vista de la lista de aprendices
-         * Enviar mensaje de confirmación
-         */
         Optional<Aprendiz> aprendizOpt = aprendicesService.findById(id);
         if (aprendizOpt.isPresent()) {
             aprendicesService.deleteById(id);

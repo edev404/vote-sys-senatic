@@ -49,6 +49,7 @@ public class AprendizPOJOtoAprendiz implements GenericMapper<AprendizPOJO, Apren
         Usuario usuario = new Usuario();
         usuario.setUsername(pojo.getNumeroDocumento());
         usuario.setPassword(passwordEncoder.encode(pojo.getNumeroDocumento()));
+        usuario.setEstatus(true);
         usuario.setFechaRegistro(new Date());
 
         usuariosService.addUsuario(usuario);

@@ -45,4 +45,5 @@ public class Usuario {
 				)
 	private List<Perfil> perfiles;
     private Date fechaRegistro;
+    private Boolean estatus;
 }

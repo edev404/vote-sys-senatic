@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,15 +38,18 @@ public class HomeController {
     @Autowired
     private ICandidatosService candidatosService;
 
-    @GetMapping("/")
-    public String redirectByRole(Authentication auth){
-        Optional<Usuario> optional = usuariosService.findByUsername(auth.getUsername());
-        if(optional.isPresent()){
-            Usuario usuario = optional.get();
-            if (perfilesService.isThisPerfil(usuario, "APRENDIZ")) {
-                return "redirect:/home/aprendiz";
-            } else if (perfilesService.isThisPerfil(usuario, "ADMINISTRADOR")){
-                return "redirect:/home/administrador";
+    @GetMapping("/home")
+    public String redirectByRole(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            Optional<Usuario> optional = usuariosService.findByUsername(authentication.getName());
+            if(optional.isPresent()){
+                Usuario usuario = optional.get();
+                if (perfilesService.isThisPerfil(usuario, "APRENDIZ")) {
+                    return "redirect:/home/aprendiz";
+                } else if (perfilesService.isThisPerfil(usuario, "ADMINISTRADOR")){
+                    return "redirect:/aprendices/view";
+                }
             }
         }
         return "redirect:/logout";

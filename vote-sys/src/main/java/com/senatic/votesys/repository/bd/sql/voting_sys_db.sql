@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 04-03-2023 a las 20:19:42
+-- Tiempo de generación: 07-03-2023 a las 09:41:44
 -- Versión del servidor: 8.0.32-0ubuntu0.22.04.2
 -- Versión de PHP: 8.1.2-1ubuntu2.10
 
@@ -77,6 +77,14 @@ CREATE TABLE `perfiles` (
   `perfil` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Volcado de datos para la tabla `perfiles`
+--
+
+INSERT INTO `perfiles` (`id`, `perfil`) VALUES
+(1, 'APRENDIZ'),
+(2, 'ADMINISTRADOR');
+
 -- --------------------------------------------------------
 
 --
@@ -88,6 +96,13 @@ CREATE TABLE `UsuarioPerfil` (
   `idPerfil` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Volcado de datos para la tabla `UsuarioPerfil`
+--
+
+INSERT INTO `UsuarioPerfil` (`idUsuario`, `idPerfil`) VALUES
+(28, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -97,9 +112,16 @@ CREATE TABLE `UsuarioPerfil` (
 CREATE TABLE `usuarios` (
   `id` int NOT NULL,
   `fechaRegistro` datetime(6) DEFAULT NULL,
-  `password` varchar(10) DEFAULT NULL,
+  `password` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `username` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `fechaRegistro`, `password`, `username`) VALUES
+(28, '2023-03-07 07:57:54.807000', '$2a$10$v/IejcfOvUDJbHJJcATEteBrZUGHRpfOPxmPJ9wBjNTB1336WUBHO', '3516924708');
 
 -- --------------------------------------------------------
 
@@ -111,7 +133,7 @@ CREATE TABLE `votaciones` (
   `id` int NOT NULL,
   `descripcion` varchar(250) DEFAULT NULL,
   `estado` varchar(255) DEFAULT NULL,
-  `fechaTerminacion` datetime(6) DEFAULT NULL,
+  `fechaTerminacion` datetime DEFAULT NULL,
   `nombre` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -181,8 +203,7 @@ ALTER TABLE `usuarios`
 -- Indices de la tabla `votaciones`
 --
 ALTER TABLE `votaciones`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `votaciones_unique` (`nombre`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `votos`
@@ -201,31 +222,31 @@ ALTER TABLE `votos`
 -- AUTO_INCREMENT de la tabla `candidatos`
 --
 ALTER TABLE `candidatos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001872210;
 
 --
 -- AUTO_INCREMENT de la tabla `perfiles`
 --
 ALTER TABLE `perfiles`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT de la tabla `votaciones`
 --
 ALTER TABLE `votaciones`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `votos`

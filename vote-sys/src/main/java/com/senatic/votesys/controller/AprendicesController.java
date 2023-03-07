@@ -64,21 +64,22 @@ public class AprendicesController {
     @PostMapping("/create/upload")
     public String saveAprendicesByCSV(@RequestParam("csvFile") MultipartFile csvFile, RedirectAttributes attributes) {
         List<AprendizPOJO> aprendicesPOJO = new ArrayList<>();
-        if(FileHandler.isCsv(csvFile)) {
-        	try {
-    			aprendicesPOJO = FileHandler.csvToList(csvFile);
-    		} catch (CsvParsingException e) {
-    			attributes.addFlashAttribute("msgDanger", e.getMessage());
-    		}
+        if (FileHandler.isCsv(csvFile)) {
+            try {
+                aprendicesPOJO = FileHandler.csvToList(csvFile);
+            } catch (CsvParsingException e) {
+                e.printStackTrace();
+            }
             if (!aprendicesPOJO.isEmpty()) {
-               List<Aprendiz> aprendices = aprendicesPOJO.stream().map(aprendizDTO -> genericMapper.map(aprendizDTO)).toList();
-               aprendicesService.addAprendices(aprendices);
+                List<Aprendiz> aprendices = aprendicesPOJO.stream().map(aprendizDTO -> genericMapper.map(aprendizDTO))
+                        .toList();
+                aprendicesService.addAprendices(aprendices);
             } else {
                 attributes.addFlashAttribute("msgDanger", "El csv no contiene registros");
             }
             attributes.addFlashAttribute("msgDone", "Todos los registros guardados exitosamente");
-        }else {
-        	attributes.addFlashAttribute("msgDanger", "el unico formato soportado es csv...");
+        } else {
+            attributes.addFlashAttribute("msgDanger", "el unico formato soportado es csv...");
         }
         return "redirect:/aprendices/view";
     }
@@ -105,36 +106,32 @@ public class AprendicesController {
          * Eliminar al aprendiz por id y redirigir a la vista de la lista de aprendices
          * Enviar mensaje de confirmación
          */
-    	Optional<Aprendiz> aprendizOpt = aprendicesService.findById(id);
-    	if(aprendizOpt.isPresent()) {
-    		aprendicesService.deleteById(id);
-    		redirectAtt.addFlashAttribute("msg", "borrado exitosamente");
-    	}else {
-    		redirectAtt.addFlashAttribute("msg", "no existe tal aprendiz que desea borrar");
-    	}
+        Optional<Aprendiz> aprendizOpt = aprendicesService.findById(id);
+        if (aprendizOpt.isPresent()) {
+            aprendicesService.deleteById(id);
+            redirectAtt.addFlashAttribute("msg", "borrado exitosamente");
+        } else {
+            redirectAtt.addFlashAttribute("msg", "no existe tal aprendiz que desea borrar");
+        }
         return "redirect:/aprendices/view";
     }
 
-    @GetMapping("/update/{id}")
-    public String updateAprendizView(@PathVariable("id") String id, Model model) {
-        /*
-         * TO DO:
-         * Retornar el formulario de aprendiz con todos los datos correspondientes al
-         * aprendiz del id
-         */
-        model.addAttribute("aprendiz", aprendicesService.findById(id).get());
-        return "admin/add-aprendiz/edit";
+    @GetMapping("/edit/{id}")
+    public String editAprendizView(@PathVariable("id") String id, Model model, RedirectAttributes redirectAtt) {
+        Optional<Aprendiz> aprendizOpt = aprendicesService.findById(id);
+        if (aprendizOpt.isPresent()) {
+            model.addAttribute("aprendiz", aprendizOpt.get());
+            return "admin/aprendiz/edit";
+        } else {
+            redirectAtt.addFlashAttribute("msg", "no existe tal aprendiz que desea borrar");
+        }
+        return "redirect:/aprendices/view";
     }
 
-    @PostMapping("/update")
-    public String updateAprendiz(AprendizPOJO aprendiz, RedirectAttributes redirectAtt) {
-        /*
-         * TO DO:
-         * Recibir un aprendiz como parametro y almacenarlo
-         * Redirigir a la vista de aprendices
-         * Enviar mensaje de confirmación
-         */
-        aprendicesService.updateAprendiz(aprendiz);
+    @PostMapping("/edit")
+    public String editAprendiz(Aprendiz aprendiz, RedirectAttributes redirectAtt) {
+        aprendicesService.addAprendiz(aprendiz);
+        redirectAtt.addFlashAttribute("msgDone", "el aprendiz fue almacenado satisfactoriamente");
         return "redirect:/aprendices/view";
     }
 

@@ -2,23 +2,17 @@ package com.senatic.votesys.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.senatic.votesys.exception.CsvParsingException;
-import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.dto.AprendizPOJO;
 
 public class FileHandler {
@@ -86,6 +80,7 @@ public class FileHandler {
 			// throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
 		}
 	}
+	*/
 
 	// Trying another thing
 	public static List<AprendizPOJO> csvToAprendizPOJOs(MultipartFile multipart) {
@@ -118,5 +113,5 @@ public class FileHandler {
 		}
 		return aprendicesPOJOs;
 	}
-	*/
+
 }

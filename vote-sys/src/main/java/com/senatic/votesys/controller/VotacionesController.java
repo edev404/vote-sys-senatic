@@ -39,7 +39,7 @@ public class VotacionesController {
     
     @GetMapping("/view")
     public String getVotaciones(@RequestParam(defaultValue = "0") Integer page,
-                                @RequestParam(defaultValue = "5") Integer size,
+                                @RequestParam(defaultValue = "6") Integer size,
                                 Model model){
         Pageable paging = PageRequest.of(page, size);
         Page<Votacion> listVotaciones = votacionesService.getVotacionesPaginate(paging);
@@ -51,7 +51,7 @@ public class VotacionesController {
     public String searchVotacion(@RequestParam("nombre") String nombre,
                                 @RequestParam("estado") String estado,
                                 @RequestParam(defaultValue = "0") Integer page,
-                                @RequestParam(defaultValue = "5") Integer size,
+                                @RequestParam(defaultValue = "6") Integer size,
                                 Model model){
         Votacion votacion = new Votacion();
         votacion.setNombre(nombre);

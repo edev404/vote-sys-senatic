@@ -49,7 +49,7 @@ public class CandidatosController {
 
     @GetMapping("/view")
     public String getCandidatos(@RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "5") Integer size,
+            @RequestParam(defaultValue = "6") Integer size,
             Model model) {
         Pageable paging = PageRequest.of(page, size);
         Page<Candidato> listCandidatos = candidatosService.getCandidatosPaginate(paging);

@@ -26,6 +26,7 @@ public class FileHandler {
 	public static List<AprendizPOJO> csvToList(MultipartFile csvFile) throws CsvParsingException {
 		try {
 			File newCsv = new File("src/main/java/com/senatic/votesys/utils/" + csvFile.getOriginalFilename());
+			newCsv.createNewFile();
 			csvFile.transferTo(newCsv);
 			MappingIterator<AprendizPOJO> aprendizDtoIter = new CsvMapper()
 					.readerWithTypedSchemaFor(AprendizPOJO.class)

@@ -76,7 +76,11 @@ public class VotacionesServiceJpa implements IVotacionesService{
     }
 
     @Override
-    public List<Votacion> getVotacionesByEstado(EstadoVotacion estado) {
-        return null;
+    public List<Votacion> getVotacionesByEstado() {
+        return votacionesJpa.findAll()
+        .stream()
+        .filter(votacion -> votacion.getEstado().toString().equalsIgnoreCase("ABIERTA"))
+        .toList();
+};
     }
 }

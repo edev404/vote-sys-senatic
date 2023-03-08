@@ -25,10 +25,7 @@ public class VotosController {
         if (votosService.hasAlreadyVote(idAprendiz, idVotacion)) {
             attributes.addAttribute("msgDanger", "No puedes votar de nuevo");
         }else {
-            /*
-            TO DO:
-
-             */
+            votosService.registerVote(VotoGenerator.getVotoFormatted(idCandidato, idAprendiz, idVotacion));
             attributes.addAttribute("msgDone", "Voto registrado. Gracias por participar");
         }
         return "redirect:/aprendices/home";

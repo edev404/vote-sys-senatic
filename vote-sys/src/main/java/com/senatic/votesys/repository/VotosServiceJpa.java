@@ -46,4 +46,9 @@ public class VotosServiceJpa implements IVotosService{
     public List<Voto> getByVotacionAndCandidato(Integer idVotacion, Integer idCandidato) {
         return votosRepository.findByVotacionAndCandidato(idVotacion, idCandidato);
     }   
+
+    @Override
+    public void registerVote(Voto voto){
+        votosRepository.save(voto);
+    }
 }

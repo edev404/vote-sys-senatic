@@ -85,11 +85,6 @@ public class AprendicesController {
     public String getAprendices(@RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "6") Integer size,
             org.springframework.ui.Model model) {
-        // TO DO: Desplegar lista de aprendices en la vista
-        /*
-         * Debe soportar paginación y ordenación por ficha
-         * Debe soportar busqueda By example por ficha
-         */
         Pageable paging = PageRequest.of(page, size);
         Page<Aprendiz> listAprendices = aprendicesService.getAprendicesPaginate(paging);
         model.addAttribute("aprendices", listAprendices);

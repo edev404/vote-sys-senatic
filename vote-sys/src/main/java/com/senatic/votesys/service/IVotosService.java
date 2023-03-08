@@ -10,4 +10,5 @@ public interface IVotosService {
     List<Voto> getByVotacion(Integer idVotacion);
     Integer countByVotacion(Integer idVotacion);
     List<Voto> getByVotacionAndCandidato(Integer idVotacion, Integer idCandidato);
+    void registerVote(Voto voto);
 }

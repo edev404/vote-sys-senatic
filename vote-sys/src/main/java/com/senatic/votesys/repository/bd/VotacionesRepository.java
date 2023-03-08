@@ -21,6 +21,4 @@ public interface VotacionesRepository extends JpaRepository<Votacion, Integer>{
     @Query(value="UPDATE votaciones c SET c.estado = 'ABIERTA' WHERE c.id= :idVotacion" , nativeQuery = true)
     void enableVotacionById(Integer idVotacion);
 
-    List<Votacion> findByEstado(EstadoVotacion estado);
-
 }

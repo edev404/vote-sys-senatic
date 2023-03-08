@@ -20,5 +20,5 @@ public interface IVotacionesService {
     Optional<Votacion> getVotacionById(Integer idVotacion);
     void disableVotacionById(Integer idVotacion);
     void enableVotacionById(Integer idVotacion);
-    List<Votacion> getVotacionesByEstado(EstadoVotacion estado);
+    List<Votacion> getVotacionesByEstado();
 }

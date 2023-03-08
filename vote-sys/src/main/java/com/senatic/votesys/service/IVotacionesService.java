@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.senatic.votesys.model.Votacion;
-import com.senatic.votesys.model.enums.EstadoVotacion;
 
 public interface IVotacionesService {
     List<Votacion> getVotaciones();

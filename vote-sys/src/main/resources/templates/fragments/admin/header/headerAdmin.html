@@ -48,9 +48,9 @@
                 </ul>
             </div>
         </nav>
-        <a class="btn btn-danger" th:href="@{/logout}" title="Cerrar sesión" role="button">
-            Cerrar sesión
-        </a>
+        <form th:action="@{/doLogout}" method="post">
+            <input type="submit" value="Cerrar Sesión" class="btn btn-danger">
+        </form>
         <!-- Modal -->
         <div class="modal fade" name="exampleModal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">

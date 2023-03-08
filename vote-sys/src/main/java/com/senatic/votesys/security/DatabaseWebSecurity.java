@@ -36,7 +36,17 @@ public class DatabaseWebSecurity {
 				.anyRequest().authenticated()
 
 				//El formulario de Login no requiere autenticacion
-				.and().formLogin().defaultSuccessUrl("/home", true).permitAll().and().logout().permitAll();
+				.and()
+				.formLogin()
+							.loginPage("/login")
+							.failureUrl("/login?error=true")
+							.defaultSuccessUrl("/home", true)
+							.permitAll()
+				.and()
+				.logout()
+						.logoutUrl("/doLogout")
+						.logoutSuccessUrl("/login")
+						.permitAll();
 		
 		return http.build();
 		 

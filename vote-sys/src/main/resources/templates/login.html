@@ -1,38 +1,43 @@
 <!-- Vista para el login -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="../static/css/login.css">
+    <title>Sistema de Votación | Login</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
     <section class="login">
         <div class="section__form">
             <div class="form__text">
-                <h2>Bienvenido Sistema de votos</h2>
-                <span>Bienvenido, Por favor ingresa estos detalles</span>
+                <h2>Sistema de votación institucional</h2>
+                <span>Bienvenido. Por favor, ingrese sus credenciales</span>
             </div>
-            <form class="login">
+            <form class="login" th:action="@{/login}" method="post">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        <span th:text="#{login.error}"></span>
+                    </div>
+                </div>
                 <div class="usuario">
                     <label for="usuario">
                         Usuario
                     </label>
-                    <input type="text" id="usuario" name="usuario" placeholder="Usuario">
+                    <input type="text" id="usuario" name="username" placeholder="Numero documento">
                 </div>
                 <div class="clave">
                     <label for="contraseña">
                         Contraseña
                     </label>
-                    <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña">
+                    <input type="password" id="contraseña" name="password" placeholder="Contraseña">
                 </div>
-                <button>Entrar al sistema</button>
+                <button type="submit">Entrar al sistema</button>
             </form>
         </div>
         <picture class="login">
-            <img src="logo.png" alt="">
+            <img th:src="@{/images/logo.png}" alt="logo sena">
         </picture>
     </section>
 </body>

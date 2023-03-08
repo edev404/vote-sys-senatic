@@ -15,15 +15,15 @@
     <header th:insert="~{fragments/aprendiz/header/headerAprendiz :: header-aprendiz}"></header>
     <div class="container mt-5 w-100 d-flex flex-lg-wrap">
         <div class="row w-50">
-            <img src="https://pps.whatsapp.net/v/t61.24694-24/324038090_771767760979608_6135570868240330168_n.jpg?ccb=11-4&oh=01_AdRbt6hY67RAlHmo5wT01u5x4uCbvBgovV33OWFCBkSyyw&oe=640E1499" class="img-fluid p-0" alt="logo candidato">
+            <img th:src="*{'data:image/jpeg;base64,'+{candidato.imagen.image}}" class="img-fluid p-0" alt="logo candidato">
         </div>
 
         <div class="row w-50 bg-dark">
             <div class="card">
                 <div class="card-body">
                     
-                    <h5 class="card-title">Eduardo Ramirez</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">2503106</h6>
+                    <h5 class="card-title" th:text="${candidato.aprendiz.nombre} + ' ' + ${candidato.aprendiz.apellido}"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="${candidato.aprendiz.ficha}"></h6>
 
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
@@ -35,19 +35,18 @@
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li>
-                                    1
+                                <li th:text="${candidato.propuestas}">
+                                    
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="Vota por mi">
+                    <a th:href="@{/votos/vote-by/{id} (id=${candidato.id})}" class="btn" role="button"data-bs-toggle="tooltip" data-bs-placement="top" title="Vota por mi">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-envelope-paper-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M6.5 9.5 3 7.5v-6A1.5 1.5 0 0 1 4.5 0h7A1.5 1.5 0 0 1 13 1.5v6l-3.5 2L8 8.75l-1.5.75ZM1.059 3.635 2 3.133v3.753L0 5.713V5.4a2 2 0 0 1 1.059-1.765ZM16 5.713l-2 1.173V3.133l.941.502A2 2 0 0 1 16 5.4v.313Zm0 1.16-5.693 3.337L16 13.372v-6.5Zm-8 3.199 7.941 4.412A2 2 0 0 1 14 16H2a2 2 0 0 1-1.941-1.516L8 10.072Zm-8 3.3 5.693-3.162L0 6.873v6.5Z"/>
                         </svg>
-
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

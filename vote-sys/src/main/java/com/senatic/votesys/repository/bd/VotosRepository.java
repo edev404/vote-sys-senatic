@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.Candidato;
+import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.model.Voto;
 
 @Repository
@@ -17,7 +19,7 @@ public interface VotosRepository extends JpaRepository<Voto, Integer>{
     @Query(value="", nativeQuery = true)
     Optional<Candidato> findTopByVotacion(@Param("idVotacion") Integer idVotacion);
 
-    Optional<Voto> findByAprendizAndVotacion(String idAprendiz, Integer idVotacion);
+    Optional<Voto> findByAprendizAndVotacion(Aprendiz aprendiz, Votacion votacion);
     List<Voto> findByVotacion(Integer idVotacion);
     Integer countByVotacion(Integer idVotacion);
     List<Voto> findByVotacionAndCandidato(Integer idVotacion, Integer idCandidato);

@@ -29,7 +29,7 @@ public class DatabaseWebSecurity {
 				.permitAll()
 
 				//Asignar permisos a URLs por ROLES
-				.requestMatchers("/home/aprendiz/search", "/home/aprendiz/" , "/votos/**").hasAnyAuthority("APRENDIZ")
+				.requestMatchers("/home/aprendiz/**", "/home/aprendiz/" , "/votos/**").hasAnyAuthority("APRENDIZ")
 				.requestMatchers("/aprendices/**", "/candidatos/**", "/votaciones/**", "/home/administrador").hasAnyAuthority("ADMINISTRADOR")
 
 				//Todas las demás URLs de la Aplicación requieren autenticación

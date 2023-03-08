@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import com.senatic.votesys.model.Aprendiz;
+import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.model.Voto;
 import com.senatic.votesys.repository.bd.VotosRepository;
+import com.senatic.votesys.service.IAprendicesService;
+import com.senatic.votesys.service.IVotacionesService;
 import com.senatic.votesys.service.IVotosService;
 
 @Service
@@ -18,9 +22,17 @@ public class VotosServiceJpa implements IVotosService{
     @Autowired
     private VotosRepository votosRepository;
 
+    @Autowired
+    private IAprendicesService aprendicesService;
+
+    @Autowired
+    private IVotacionesService votacionesService;
+
     @Override
     public Boolean hasAlreadyVote(String idAprendiz, Integer idVotacion) {
-        Optional<Voto> voto = votosRepository.findByAprendizAndVotacion(idAprendiz, idVotacion);
+        Aprendiz aprendiz = aprendicesService.getAprendizById(idAprendiz).get();
+        Votacion votacion = votacionesService.getVotacionById(idVotacion).get();
+        Optional<Voto> voto = votosRepository.findByAprendizAndVotacion(aprendiz, votacion);
         if (voto.isPresent()) {
             return true;
         }

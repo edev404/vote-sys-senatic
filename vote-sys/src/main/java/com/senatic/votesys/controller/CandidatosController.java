@@ -1,7 +1,8 @@
 package com.senatic.votesys.controller;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -21,14 +22,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.Candidato;
+import com.senatic.votesys.model.Imagen;
 import com.senatic.votesys.model.dto.CandidatoPOJO;
+import com.senatic.votesys.model.enums.EstadoCandidato;
 import com.senatic.votesys.model.mapper.GenericMapper;
 import com.senatic.votesys.service.IAprendicesService;
 import com.senatic.votesys.service.ICandidatosService;
+import com.senatic.votesys.service.IImagenesService;
 import com.senatic.votesys.service.IVotacionesService;
 
 @Controller
@@ -43,6 +48,9 @@ public class CandidatosController {
 
     @Autowired
     private IVotacionesService votacionesService;
+
+    @Autowired
+    private IImagenesService imagenesService;
 
     @Autowired
     private GenericMapper<CandidatoPOJO, Candidato> genericMapper;
@@ -121,7 +129,36 @@ public class CandidatosController {
     }
 
     @PostMapping("/update")
-    public String updateCandidato(Candidato candidato, RedirectAttributes attributes, Model model) {
+    public String updateCandidato(@RequestParam(name = "archivoImagen", required = false) MultipartFile file,
+            Candidato candidato, RedirectAttributes attributes, Model model) {
+        
+        //@RequestParam(name = "documento", required = true) String idAprendiz
+        candidato.setAprendiz(aprendicesService.findById(candidato.getAprendiz().getId()).get());
+        
+        if (!file.isEmpty()) {
+            Imagen imagen = new Imagen();
+            Optional<Imagen> optionalImagen = imagenesService.getImagenById(candidato.getAprendiz().getId());
+            MultipartFile image = file;
+            try {
+                imagen.setId(candidato.getAprendiz().getId());
+                imagen.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //Chequeamos si existe una imagen con el mismo id
+            if (optionalImagen.isPresent()) {
+                imagenesService.updateBlobById(imagen.getId(), imagen.getImage());
+            } else {
+                imagenesService.addImagen(imagen);
+            }
+    
+            //Despues de actualizar o guardar
+            Optional<Imagen> optional = imagenesService.getImagenById(candidato.getAprendiz().getId());
+            if (optional.isPresent()) {
+                candidato.setImagen(optional.get());
+            }
+        }
+        candidato.setEstado(EstadoCandidato.HABILITADO);
         candidatosService.addCandidato(candidato);
         attributes.addFlashAttribute("msgDone", "Candidato actualizado satisfactoriamente");
         return "redirect:/candidatos/view";

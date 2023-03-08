@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.senatic.votesys.model.Candidato;
@@ -52,7 +53,7 @@ public class HomeController {
                 }
             }
         }
-        return "redirect:/logout";
+        return "redirect:/doLogout";
     }
 
     @GetMapping("/home/aprendiz")
@@ -75,6 +76,18 @@ public class HomeController {
             return "aprendiz/home";
         } else {
             attributes.addFlashAttribute("msgDanger", "No existe la votación que intenta consultar");
+            return "redirect:/home/aprendiz";
+        }
+    }
+
+    @GetMapping("/home/aprendiz/candidato/details/{id}")
+    public String homeAprendizSearch(@PathVariable("id") Integer idCandidato, Model model, RedirectAttributes attributes){
+        Optional<Candidato> optional = candidatosService.getCandidatoById(idCandidato);
+        if (optional.isPresent()) {
+            model.addAttribute("candidato", optional.get());
+            return "aprendiz/detail";
+        } else {
+            attributes.addFlashAttribute("msgDanger", "No existe el candidato que intenta consultar");
             return "redirect:/home/aprendiz";
         }
     }

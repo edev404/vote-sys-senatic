@@ -12,9 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.senatic.votesys.model.Candidato;
+import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.model.enums.EstadoCandidato;
 import com.senatic.votesys.repository.bd.CandidatosRepository;
 import com.senatic.votesys.service.ICandidatosService;
+import com.senatic.votesys.service.IVotacionesService;
 
 @Service
 @Primary
@@ -23,6 +25,9 @@ public class CandidatosServiceJpa implements ICandidatosService{
 
     @Autowired
     private CandidatosRepository candidatosRepository;
+
+    @Autowired
+    private IVotacionesService votacionesService;
     
     @Override
     public Page<Candidato> getCandidatosPaginate(Pageable page){
@@ -67,7 +72,8 @@ public class CandidatosServiceJpa implements ICandidatosService{
 
     @Override
     public List<Candidato> getCandidatosByVotacionAndEstado(Integer idVotacion, EstadoCandidato estado) {
-        return null;
+        Votacion votacion = votacionesService.getVotacionById(idVotacion).get();
+        return candidatosRepository.findByVotacionAndEstado(votacion, estado);
     }
    
     

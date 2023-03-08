@@ -28,30 +28,30 @@
                 </ul>
             </div> 
             <div class="row col-lg-4 bg-success p-5 rounded">
-                <img th:src="@{/logo.png}" alt="logo sena" style="height: 350px;" />
+                <img th:src="@{/images/logo.png}" alt="logo sena" style="height: 350px;" />
             </div>
             <div class="row col-lg-8 p-3 m-auto">
                 <div class="col-md-6 mb-3">
                     <input type="text" class="form-control" id="candidato" name="idCandidato" th:field="*{id}" style="display:none;">
                     <label class="form-label" for="numeroDocumento">Numero de documento:</label>
-                    <input disabled type="number" class="form-control " id="numeroDocumento" name="documento" th:field="*{aprendiz.id}">
+                    <input readonly="readonly" type="number" class="form-control " id="numeroDocumento" name="documento" th:field="*{aprendiz.id}">
                 </div>
     
                 <div class="col-md-3"> 
                     <div class="form-group">
                       <label for="imagen">Imagen</label>
-                      <input type="file" class="form-control-file" name="imagen" id="imagen" th:field="*{imagen.image}">
+                      <input type="file" class="form-control-file" name="archivoImagen" id="imagen" required="required">
                     </div>
                   </div>
                 <div class="col-12 mb-3">
                     <label class="form-label" for="select">Votación:</label>
-                    <select class="form-select" aria-label="Default select example" id="select">
-                        <option th:value="${votacion.id}" th:text="${votacion.nombre}" selected></option>
+                    <select class="form-select" aria-label="Default select example" id="select" th:field="*{votacion}" name="idVotacion">
+                        <option th:each="votacion : ${votaciones}" th:text="${votacion.nombre}" th:value="${votacion.id}"></option>
                     </select>
                 </div>
                 <div class="col mb-3">
                     <label class="form-check-label" for="propuestas">Propuestas del candidato:</label>
-                    <textarea class="form-control auto-resize" id="propuestas" rows="3" cols="50" th:field="*{candidato.propuestas}"></textarea>
+                    <textarea class="form-control auto-resize" id="propuestas" rows="3" cols="50" th:field="*{propuestas}" required="required"></textarea>
                 </div>
     
                 <div class="col-12 d-flex justify-content-end">

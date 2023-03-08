@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import com.senatic.votesys.model.Votacion;
+import com.senatic.votesys.model.enums.EstadoVotacion;
 import com.senatic.votesys.repository.bd.VotacionesRepository;
 import com.senatic.votesys.service.IVotacionesService;
 
@@ -75,7 +76,7 @@ public class VotacionesServiceJpa implements IVotacionesService{
     }
 
     @Override
-    public List<Votacion> getVotacionesByEstado() {
+    public List<Votacion> getVotacionesByEstado(EstadoVotacion estado) {
         return votacionesJpa.findAll()
         .stream()
         .filter(votacion -> votacion.getEstado().toString().equalsIgnoreCase("ABIERTA"))

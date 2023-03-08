@@ -1,5 +1,12 @@
 package com.senatic.votesys.model.mapper;
 
+import java.util.Date;
+
+import com.senatic.votesys.model.Aprendiz;
+import com.senatic.votesys.model.Candidato;
+import com.senatic.votesys.model.Votacion;
+import com.senatic.votesys.model.Voto;
+
 public class VotoGenerator{
     public static Voto getVotoFormatted(Integer idCandidato, String idAprendiz, Integer idVotacion){
         Candidato candidato = new Candidato();

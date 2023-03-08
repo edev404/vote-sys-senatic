@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.dto.AprendizPOJO;
+import com.senatic.votesys.model.enums.EstadoAprendiz;
 import com.senatic.votesys.repository.bd.AprendicesRepository;
 import com.senatic.votesys.service.IAprendicesService;
 
@@ -71,6 +72,12 @@ public class AprendicesServiceJpa implements IAprendicesService{
 	public void addAprendices(List<Aprendiz> aprendices) {
 		aprendicesRepository.saveAll(aprendices);
 	}
+
+	@Override
+	public Integer countAprendicesByEstado(EstadoAprendiz estado) {
+		return aprendicesRepository.countByEstado(estado);
+	}
+	
 	
 	
 }

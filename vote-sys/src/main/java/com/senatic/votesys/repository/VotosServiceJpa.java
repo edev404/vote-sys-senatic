@@ -1,5 +1,6 @@
 package com.senatic.votesys.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,25 @@ public class VotosServiceJpa implements IVotosService{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Integer getCandidadVotos(Integer idVotacion) {
+        return votosRepository.countByVotacion(idVotacion);
+    }
+
+    @Override
+    public List<Voto> getByVotacion(Integer idVotacion) {
+        return votosRepository.findByVotacion(idVotacion);
+    }
+
+    @Override
+    public Integer countByVotacion(Integer idVotacion) {
+        return votosRepository.countByVotacion(idVotacion);
+    }
+
+    @Override
+    public List<Voto> getByVotacionAndCandidato(Integer idVotacion, Integer idCandidato) {
+        return votosRepository.findByVotacionAndCandidato(idVotacion, idCandidato);
     }   
 }

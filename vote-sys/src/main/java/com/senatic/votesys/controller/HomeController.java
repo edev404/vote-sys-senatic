@@ -58,6 +58,7 @@ public class HomeController {
     @GetMapping("/home/aprendiz")
     public String homeAprendiz(Model model){
         model.addAttribute("msg", "No existen candidatos disponibles");
+        
         return "aprendiz/home";
     }
 

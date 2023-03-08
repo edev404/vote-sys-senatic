@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.dto.AprendizPOJO;
+import com.senatic.votesys.model.enums.EstadoAprendiz;
 
 public interface IAprendicesService {
 	Page<Aprendiz> getAprendicesPaginate(Pageable paging);
@@ -18,4 +19,5 @@ public interface IAprendicesService {
 	Optional<Aprendiz> getAprendizById(String idAprendiz);
 	void addAprendices(List<Aprendiz> aprendices);
 	Page<Aprendiz> getAprendicesPaginateByExample(Pageable paging, Example<Aprendiz> example);
+	Integer countAprendicesByEstado(EstadoAprendiz estado);
 }

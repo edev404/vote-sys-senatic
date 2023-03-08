@@ -19,11 +19,16 @@ public class VotosController {
     @PatchMapping("/{idAprendiz}/vote-by/{idCandidato}")
     public String saveVoto(@PathVariable("idCandidato") Integer idCandidato,
                             @PathVariable("idAprendiz") String idAprendiz,
+                            @PathVariable("idVotacion") Integer idVotacion,
                             RedirectAttributes attributes){
 
-        if (votosService.hasAlreadyVote(idAprendiz, idCandidato)) {
+        if (votosService.hasAlreadyVote(idAprendiz, idVotacion)) {
             attributes.addAttribute("msgDanger", "No puedes votar de nuevo");
         }else {
+            /*
+            TO DO:
+
+             */
             attributes.addAttribute("msgDone", "Voto registrado. Gracias por participar");
         }
         return "redirect:/aprendices/home";

@@ -6,8 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="../static/css/login.css">
 </head>
 <body>
-    
+    <section class="login">
+        <div class="section__form">
+            <div class="form__text">
+                <h2>Bienvenido Sistema de votos</h2>
+                <span>Bienvenido, Por favor ingresa estos detalles</span>
+            </div>
+            <form class="login">
+                <div class="usuario">
+                    <label for="usuario">
+                        Usuario
+                    </label>
+                    <input type="text" id="usuario" name="usuario" placeholder="Usuario">
+                </div>
+                <div class="clave">
+                    <label for="contraseña">
+                        Contraseña
+                    </label>
+                    <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña">
+                </div>
+                <button>Entrar al sistema</button>
+            </form>
+        </div>
+        <picture class="login">
+            <img src="logo.png" alt="">
+        </picture>
+    </section>
 </body>
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas Votaciones</title>
+        <!-- Enlaces a los archivos CDN de Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1>Estadísticas de votación</h1>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-success">
+                    <tr>
+                        <th>Votación</th>
+                        <th>Cantidad de votos</th>
+                        <th>Votantes habilitados</th>
+                        <th>Votantes</th>
+                        <th>Candidatos</th>
+                        <th>Candidato más votado</th>
+                        <th>Fecha de registro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${votacion}"></td>
+                        <td th:text="${cantidadVotos}"></td>
+                        <td th:text="${votantesHabilitados}"></td>
+                        <td th:text="${votantes}"></td>
+                        <td>
+                            <ul>
+                                <li th:each="candidato : ${candidatos}">
+                                    <span th:text="${candidato.nombre}"></span>: <span
+                                        th:text="${votosPorCandidato[candidato.nombre]}"></span>
+                                </li>
+                            </ul>
+                        </td>
+                        <td class="candidatoMasVotado" th:text="${candidatoMasVotado}"></td>
+                        <td th:text="${fechaRegistro}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

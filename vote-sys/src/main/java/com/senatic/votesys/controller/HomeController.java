@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,6 +44,9 @@ public class HomeController {
     @Autowired
     private IVotosService votosService;
 
+    @Value("${current.votacion.enabled}")
+    private Integer currentVotacion;
+
     @GetMapping("/home")
     public String redirectByRole(RedirectAttributes attributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -53,9 +57,9 @@ public class HomeController {
                 // Si es aprendiz
                 if (perfilesService.isThisPerfil(usuario, "APRENDIZ")) {
                     String idAprendiz = usuario.getUsername();
-                    Integer idVotacion = 16;
+                    //VOTACION
                     // Chequeando si votó
-                    if (votosService.hasAlreadyVote(idAprendiz, idVotacion)) {
+                    if (votosService.hasAlreadyVote(idAprendiz, currentVotacion)) {
                         attributes.addFlashAttribute("msgDanger", "No puede acceder al sistema. Ya registró su voto");
                         return "redirect:/login"; // Logout si ya votó
                     } else {
@@ -99,11 +103,10 @@ public class HomeController {
 
     @GetMapping("/home/aprendiz/search/current")
     public String currentVotationDeploy(Model model, RedirectAttributes attributes) {
-        // 16
-        Optional<Votacion> optional = votacionesService.getVotacionById(16);
+        Optional<Votacion> optional = votacionesService.getVotacionById(currentVotacion);
         if (optional.isPresent()) {
             if(optional.get().getEstado().equals(EstadoVotacion.ABIERTA)){
-                List<Candidato> candidatosRs = candidatosService.getCandidatosByVotacionAndEstado(16,
+                List<Candidato> candidatosRs = candidatosService.getCandidatosByVotacionAndEstado(currentVotacion,
                         EstadoCandidato.HABILITADO);
                 List<Candidato> candidatos = candidatosRs.stream()
                         .filter(c -> c.getVotacion().getEstado()

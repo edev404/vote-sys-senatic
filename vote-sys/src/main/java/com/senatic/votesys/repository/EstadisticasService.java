@@ -1,10 +1,12 @@
 package com.senatic.votesys.repository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -80,6 +82,7 @@ public class EstadisticasService implements IEstadisticasService{
             long cantidadVotos = votosService.getByVotacionAndCandidato(votacion, candidato).stream().count();
             votosPorCandidato.put(candidato.getAprendiz().getId(), cantidadVotos);
         });
+        //Map<String, Long> result = sortByValue(votosPorCandidato);
         return votosPorCandidato;
     }
 
@@ -92,6 +95,18 @@ public class EstadisticasService implements IEstadisticasService{
         Aprendiz aprendiz = aprendicesService.getAprendizById(idAprendiz).get();
         Candidato candidato = candidatosService.getCandidatoByAprendiz(aprendiz).get();
         return candidato;
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<String, Long> sortByValue(Map<String, Long> map) {
+        List<Entry<String, Long>> list = new ArrayList<>(map.entrySet());
+        list.sort(Entry.comparingByValue());
+
+        Map<String, Long> result = new HashMap<>();
+        for (Entry<String, Long> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
     }
 
 }

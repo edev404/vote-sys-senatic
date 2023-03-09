@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.senatic.votesys.model.Aprendiz;
+import com.senatic.votesys.model.Candidato;
 import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.model.Voto;
 import com.senatic.votesys.repository.bd.VotosRepository;
@@ -40,23 +41,18 @@ public class VotosServiceJpa implements IVotosService{
     }
 
     @Override
-    public Integer getCandidadVotos(Integer idVotacion) {
-        return votosRepository.countByVotacion(idVotacion);
+    public List<Voto> getByVotacion(Votacion votacion) {
+        return votosRepository.findByVotacion(votacion);
     }
 
     @Override
-    public List<Voto> getByVotacion(Integer idVotacion) {
-        return votosRepository.findByVotacion(idVotacion);
+    public long countByVotacion(Votacion votacion) {
+        return votosRepository.findByVotacion(votacion).stream().count();
     }
 
     @Override
-    public Integer countByVotacion(Integer idVotacion) {
-        return votosRepository.countByVotacion(idVotacion);
-    }
-
-    @Override
-    public List<Voto> getByVotacionAndCandidato(Integer idVotacion, Integer idCandidato) {
-        return votosRepository.findByVotacionAndCandidato(idVotacion, idCandidato);
+    public List<Voto> getByVotacionAndCandidato(Votacion votacion, Candidato candidato) {
+        return votosRepository.findByVotacionAndCandidato(votacion, candidato);
     }   
 
     @Override

@@ -20,7 +20,6 @@ public interface VotosRepository extends JpaRepository<Voto, Integer>{
     Optional<Candidato> findTopByVotacion(@Param("idVotacion") Integer idVotacion);
 
     Optional<Voto> findByAprendizAndVotacion(Aprendiz aprendiz, Votacion votacion);
-    List<Voto> findByVotacion(Integer idVotacion);
-    Integer countByVotacion(Integer idVotacion);
-    List<Voto> findByVotacionAndCandidato(Integer idVotacion, Integer idCandidato);
+    List<Voto> findByVotacion(Votacion votacion);
+    List<Voto> findByVotacionAndCandidato(Votacion votacion, Candidato candidato);
 }

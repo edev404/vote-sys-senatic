@@ -7,6 +7,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.Candidato;
 import com.senatic.votesys.model.enums.EstadoCandidato;
 
@@ -20,4 +21,5 @@ public interface ICandidatosService {
     void disableCandidatoById(Integer idCandidato);
     void enableCandidatoById(Integer idCandidato);
     List<Candidato> getCandidatosByVotacionAndEstado(Integer idVotacion, EstadoCandidato estado);
+    Optional<Candidato> getCandidatoByAprendiz(Aprendiz aprendiz);
 }

@@ -141,7 +141,7 @@ public class VotacionesController {
         if (optional.isPresent()) {
             Estadisticas estadisticas = estadisticasService.getEstadisticas(optional.get());
             model.addAttribute("estadisticas", estadisticas);
-            return "admin/Estadisticas/Estadisticas";
+            return "admin/Estadisticas/estadisticas";
         } else {
             attribute.addFlashAttribute("msgDanger", "No existe la votación que desea consultar");
             return "redirect:/votaciones/view";

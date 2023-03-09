@@ -1,11 +1,13 @@
 package com.senatic.votesys.repository.bd;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.Candidato;
 import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.model.enums.EstadoCandidato;
@@ -20,4 +22,6 @@ public interface CandidatosRepository extends JpaRepository<Candidato, Integer>{
     void enableCandidatoById(Integer idCandidato);
 
     List<Candidato> findByVotacionAndEstado(Votacion votacion, EstadoCandidato estado);
+
+    Optional<Candidato> findByAprendiz(Aprendiz aprendiz);
 }

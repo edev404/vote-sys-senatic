@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 07-03-2023 a las 09:41:44
+-- Tiempo de generación: 09-03-2023 a las 10:30:26
 -- Versión del servidor: 8.0.32-0ubuntu0.22.04.2
--- Versión de PHP: 8.1.2-1ubuntu2.10
+-- Versión de PHP: 8.1.2-1ubuntu2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -113,15 +113,16 @@ CREATE TABLE `usuarios` (
   `id` int NOT NULL,
   `fechaRegistro` datetime(6) DEFAULT NULL,
   `password` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `username` varchar(10) DEFAULT NULL
+  `username` varchar(10) DEFAULT NULL,
+  `estatus` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `fechaRegistro`, `password`, `username`) VALUES
-(28, '2023-03-07 07:57:54.807000', '$2a$10$v/IejcfOvUDJbHJJcATEteBrZUGHRpfOPxmPJ9wBjNTB1336WUBHO', '3516924708');
+INSERT INTO `usuarios` (`id`, `fechaRegistro`, `password`, `username`, `estatus`) VALUES
+(28, '2023-03-07 07:57:54.807000', '$2a$10$v/IejcfOvUDJbHJJcATEteBrZUGHRpfOPxmPJ9wBjNTB1336WUBHO', '3516924708', 1);
 
 -- --------------------------------------------------------
 
@@ -222,13 +223,13 @@ ALTER TABLE `votos`
 -- AUTO_INCREMENT de la tabla `candidatos`
 --
 ALTER TABLE `candidatos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes`
 --
 ALTER TABLE `imagenes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001872210;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1045668031;
 
 --
 -- AUTO_INCREMENT de la tabla `perfiles`
@@ -240,19 +241,19 @@ ALTER TABLE `perfiles`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT de la tabla `votaciones`
 --
 ALTER TABLE `votaciones`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `votos`
 --
 ALTER TABLE `votos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas

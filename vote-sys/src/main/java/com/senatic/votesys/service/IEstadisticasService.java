@@ -10,9 +10,8 @@ import com.senatic.votesys.model.Votacion;
 public interface IEstadisticasService {
     
     Estadisticas getEstadisticas(Votacion votacion);
-    long getCantidadVotosRegistrados(Integer idVotacion);
     long getVotantesHabilitados();
-    long getCantidadVotos(Integer idVotacion);
+    long getCantidadVotos(Votacion votacion);
     List<Candidato> getCandidatos(Integer idVotacion);
     Map<String, Long> getVotosPorCandidato(Integer idVotacion);
     Candidato getCandidatoMasVotado(Integer idVotacion);

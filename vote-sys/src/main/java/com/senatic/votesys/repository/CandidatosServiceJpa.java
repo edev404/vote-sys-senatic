@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.senatic.votesys.model.Aprendiz;
 import com.senatic.votesys.model.Candidato;
 import com.senatic.votesys.model.Votacion;
 import com.senatic.votesys.model.enums.EstadoCandidato;
@@ -74,6 +75,11 @@ public class CandidatosServiceJpa implements ICandidatosService{
     public List<Candidato> getCandidatosByVotacionAndEstado(Integer idVotacion, EstadoCandidato estado) {
         Votacion votacion = votacionesService.getVotacionById(idVotacion).get();
         return candidatosRepository.findByVotacionAndEstado(votacion, estado);
+    }
+
+    @Override
+    public Optional<Candidato> getCandidatoByAprendiz(Aprendiz aprendiz) {
+        return candidatosRepository.findByAprendiz(aprendiz);
     }
    
     

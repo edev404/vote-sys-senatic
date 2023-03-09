@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.senatic.votesys.model.enums.EstadoVotacion;
+import com.senatic.votesys.model.Estadisticas;
 import com.senatic.votesys.model.Votacion;
+import com.senatic.votesys.service.IEstadisticasService;
 import com.senatic.votesys.service.IVotacionesService;
 
 @Controller
@@ -34,6 +36,9 @@ public class VotacionesController {
 
     @Autowired
     private IVotacionesService votacionesService;
+
+    @Autowired
+    private IEstadisticasService estadisticasService;
 
     @GetMapping("/view")
     public String getVotaciones(@RequestParam(defaultValue = "0") Integer page,
@@ -127,6 +132,20 @@ public class VotacionesController {
             attribute.addFlashAttribute("msgDanger", "No existe la votación que desea habilitar");
         }
         return "redirect:/votaciones/view";
+    }
+
+    @GetMapping("/estadisticas/{id}")
+    public String getEstadisticas(@PathVariable(name = "id", required = true) Integer idVotacion,
+            RedirectAttributes attribute, Model model) {
+        Optional<Votacion> optional = votacionesService.getVotacionById(idVotacion);
+        if (optional.isPresent()) {
+            Estadisticas estadisticas = estadisticasService.getEstadisticas(optional.get());
+            model.addAttribute("estadisticas", estadisticas);
+            return "admin/Estadisticas/Estadisticas";
+        } else {
+            attribute.addFlashAttribute("msgDanger", "No existe la votación que desea consultar");
+            return "redirect:/votaciones/view";
+        }
     }
 
     @InitBinder

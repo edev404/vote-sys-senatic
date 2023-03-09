@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <a th:href="@{/votos/vote-by/{id} (id=${candidato.id})}" class="btn" role="button"data-bs-toggle="tooltip" data-bs-placement="top" title="Vota por mi">
+                    <a th:href="@{/votos/vote-by/{id} (id=${candidato.id})}" class="btn confirmar" role="button"data-bs-toggle="tooltip" data-bs-placement="top" title="Vota por mi">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-envelope-paper-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M6.5 9.5 3 7.5v-6A1.5 1.5 0 0 1 4.5 0h7A1.5 1.5 0 0 1 13 1.5v6l-3.5 2L8 8.75l-1.5.75ZM1.059 3.635 2 3.133v3.753L0 5.713V5.4a2 2 0 0 1 1.059-1.765ZM16 5.713l-2 1.173V3.133l.941.502A2 2 0 0 1 16 5.4v.313Zm0 1.16-5.693 3.337L16 13.372v-6.5Zm-8 3.199 7.941 4.412A2 2 0 0 1 14 16H2a2 2 0 0 1-1.941-1.516L8 10.072Zm-8 3.3 5.693-3.162L0 6.873v6.5Z"/>
                         </svg>
@@ -54,5 +54,17 @@
     </div>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        // Guardamos en una variable una funcion que muestra un cuadro de dialogo de tipo confirm
+        var dialogoConfirm = function(e) {
+            if (!confirm('¿Deseas votar por este candidato? Serás expulsado del sistema despues de votar'))
+                e.preventDefault();
+        };
+
+        // Aplicamos a todos los elementos HTML que tengan la clase CSS 'confirmar' el evento click para que muestre el cuadro de dialogo de confirmacion. 
+        document.querySelectorAll('.confirmar').forEach(function(elemento) {
+            elemento.addEventListener('click', dialogoConfirm, false);
+        });
+    </script>
 </body>
 </html>

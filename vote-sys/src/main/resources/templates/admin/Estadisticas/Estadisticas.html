@@ -28,20 +28,20 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td th:text="${votacion}"></td>
-                        <td th:text="${cantidadVotos}"></td>
-                        <td th:text="${votantesHabilitados}"></td>
-                        <td th:text="${votantes}"></td>
+                        <td th:text="${estadisticas.votacion.nombre}"></td>
+                        <td th:text="${estadisticas.cantidadVotos}"></td>
+                        <td th:text="${estadisticas.votantesHabilitados}"></td>
+                        <td th:text="${estadisticas.votantes}"></td>
                         <td>
                             <ul>
-                                <li th:each="candidato : ${candidatos}">
+                                <li th:each="candidato : ${estadisticas.candidatos}">
                                     <span th:text="${candidato.nombre}"></span>: <span
-                                        th:text="${votosPorCandidato[candidato.nombre]}"></span>
+                                        th:text="${estadisticas.votosPorCandidato[candidato.aprendiz.id]}"></span>
                                 </li>
                             </ul>
                         </td>
-                        <td class="candidatoMasVotado" th:text="${candidatoMasVotado}"></td>
-                        <td th:text="${fechaRegistro}"></td>
+                        <td class="candidatoMasVotado" th:text="${estadisticas.candidatoMasVotado.aprendiz.nombre} + ' ' + ${estadisticas.candidatoMasVotado.aprendiz.apellido}"></td>
+                        <td th:text="${estadistcas.fechaRegistro}"></td>
                     </tr>
                 </tbody>
             </table>

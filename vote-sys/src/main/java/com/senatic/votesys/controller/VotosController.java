@@ -19,6 +19,8 @@ import com.senatic.votesys.service.ICandidatosService;
 import com.senatic.votesys.service.IUsuariosService;
 import com.senatic.votesys.service.IVotosService;
 
+import jakarta.transaction.Transactional;
+
 @Controller
 @RequestMapping("/votos")
 public class VotosController {
@@ -32,6 +34,7 @@ public class VotosController {
     @Autowired
     private ICandidatosService candidatosService;
     
+    @Transactional
     @GetMapping("/vote-by/{idCandidato}")
     public String saveVoto(@PathVariable("idCandidato") Integer idCandidato,
                             RedirectAttributes attributes){
@@ -52,7 +55,7 @@ public class VotosController {
                 }else {
                     votosService.registerVote(VotoGenerator.getVotoFormatted(idCandidato, idAprendiz, idVotacion));
                     attributes.addFlashAttribute("msgDone", "Voto registrado. Gracias por participar");
-                    return "redirect:/home/aprendiz";
+                    return "redirect:/login";
                 }
             }
         } else {

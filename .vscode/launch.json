@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VoteSysApplication<vote-sys>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.senatic.votesys.VoteSysApplication",
+            "projectName": "vote-sys",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -14,8 +14,8 @@
 </head>
 <body>
     <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
-    <div class="container mt-3 p-3">
-        <form class="d-lg-flex bg-light p-5" th:action="@{/votaciones/save}" th:object="${votacion}" method="POST">
+    <div class="container mt-3 p-5">
+        <form class="d-lg-flex gap-5 bg-light p-5" th:action="@{/votaciones/save}" th:object="${votacion}" method="POST">
             <div class="row col-lg-4 bg-success p-5 rounded">
                 <img th:src="@{/images/logo.png}" alt="logo sena" style="height: 350px;" />
             </div>
@@ -26,7 +26,7 @@
                     <label class="form-label" for="votacion">Nombre:</label>
                     <input type="text" class="form-control" id="votacion" name="nombre" th:field="*{nombre}" required="required">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="form-label" for="fecha">Fecha Terminación: (dd-MM-yy)</label>
                     <input type="date" class="form-control" name="fecha" id="fecha" th:field="*{fechaTerminacion}" placeholder="Fecha de terminacion" required="required">
                 </div>

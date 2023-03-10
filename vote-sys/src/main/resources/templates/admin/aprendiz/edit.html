@@ -9,7 +9,6 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/images/logo.png}">
-    <link rel="stylesheet" href="style.css">
     <title>Sistema de Votación | Editar Aprendiz</title>
 </head>
 <body>
@@ -19,7 +18,7 @@
         </div>
         <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
         </div>
-        <form class="d-lg-flex bg-light p-5" th:action="@{/aprendices/edit}" method="post" th:object="${aprendiz}">
+        <form class="d-lg-flex gap-5 bg-light p-5" th:action="@{/aprendices/edit}" method="post" th:object="${aprendiz}">
             <div class="row col-lg-4 bg-success p-5 rounded">
                 <img th:src="@{/images/logo.png}" alt="logo sena" style="height: 350px;" />
             </div>

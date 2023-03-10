@@ -1,7 +1,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
     <div class="d-flex justify-content-around align-items-center bg-success p-3" th:fragment="header-admin">
         <div class="header__img">
-            <a class="navbar-brand" th:href="@{/home/aprendices}">
+            <a class="navbar-brand" th:href="@{/aprendices/view}">
                 <img th:src="@{/images/logo.png}" alt="" width="60" height="50" class="img-fluid rounded">
             </a>
         </div>
@@ -12,39 +12,39 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                <ul style="list-style: none; display: flex;">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            aprendices
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a type="dropdown-item" class="dropdown-item" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">Agregar aprendiz</a></li>
+                            <li><a class="dropdown-item" th:href="@{/aprendices/view}">Ver aprendices</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Candidatos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{/candidatos/create}">Agregar candidato</a></li>
+                            <li><a class="dropdown-item" th:href="@{/candidatos/view}">Ver candidatos</a></li>
+                        </ul>
+                    </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        aprendices
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a type="dropdown-item" class="dropdown-item" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Agregar aprendiz</a></li>
-                        <li><a class="dropdown-item" th:href="@{/aprendices/view}">Ver aprendices</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Candidatos
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" th:href="@{/candidatos/create}">Agregar candidato</a></li>
-                        <li><a class="dropdown-item" th:href="@{/candidatos/view}">Ver candidatos</a></li>
-                    </ul>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Votaciones
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" th:href="@{/votaciones/create}">Agregar Votacion</a></li>
-                        <li><a class="dropdown-item" th:href="@{/votaciones/view}">Ver Votaciones</a></li>
-                    </ul>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Votaciones
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{/votaciones/create}">Agregar Votacion</a></li>
+                            <li><a class="dropdown-item" th:href="@{/votaciones/view}">Ver Votaciones</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </nav>

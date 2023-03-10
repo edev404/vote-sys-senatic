@@ -8,9 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" th:href="@{/images/logo.png}">
     <title>Sistema de Votación | Aprendices </title>
 </head>
 
@@ -61,7 +60,7 @@
                         <td th:text="${aprendiz.celular}"></td>
                         <td class=" d-flex flex-column flex-sm-row gap-2 justify-content-center align-items-center">
                             <a th:href="@{/aprendices/delete/{id} (id=${aprendiz.id})}">
-                                <button class="btn btn-danger">
+                                <button class="btn btn-danger confirmar">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-trash3" viewBox="0 0 16 16">
                                         <path
@@ -107,6 +106,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    <script>
+        document.querySelectorAll('.confirmar').forEach((elemento) => {
+        elemento.addEventListener('click', (evento) => {
+            if (!confirm('¿Estás seguro de que deseas eliminar este elemento?')) {
+            evento.preventDefault();
+            }
+        }, false);
+        });
+    </script>
 </body>
 
 </html>

@@ -1,120 +1,204 @@
 <!-- Vista para la lista de aprendices -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link rel="icon" th:href="@{/images/logo.png}" />
+        <title>Sistema de Votación | Aprendices</title>
+    </head>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" th:href="@{/images/logo.png}">
-    <title>Sistema de Votación | Aprendices </title>
-</head>
-
-<body>
-    <header th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"></header>
-    <div class="container mt-5">
-        <div class="container my-3">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-8">
-                    <div th:if="${msgDanger != null}" class="alert alert-danger" th:text="${msgDanger}" role="alert">
-                    </div>
-                    <div th:if="${msgDone != null}" class="alert alert-success" th:text="${msgDone}" role="alert">
-                    </div>
-                    <form class="d-flex flex-column gap-2 flex-lg-row align-items-center justify-content-lg-between"
-                        method="get" th:action="@{/aprendices/search}" th:object="${search}">
+    <body>
+        <header
+            th:insert="~{fragments/admin/header/headerAdmin :: header-admin}"
+        ></header>
+        <div class="container mt-5">
+            <div class="container my-3">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div
+                            th:if="${msgDanger != null}"
+                            class="alert alert-danger"
+                            th:text="${msgDanger}"
+                            role="alert"
+                        ></div>
+                        <div
+                            th:if="${msgDone != null}"
+                            class="alert alert-success"
+                            th:text="${msgDone}"
+                            role="alert"
+                        ></div>
+                        <form
+                            class="d-flex flex-column gap-2 flex-lg-row align-items-center justify-content-lg-between"
+                            method="get"
+                            th:action="@{/aprendices/search}"
+                            th:object="${search}"
+                        >
                             <div class="input-group mb-3 mb-lg-0">
-                                <label for="search1" class="input-group-text me-2">Ficha del grupo:</label>
-                                <input class="form-control mr-sm-2 flex-grow-1" type="text" placeholder="Ficha" th:field="*{ficha}">
+                                <label
+                                    for="search1"
+                                    class="input-group-text me-2"
+                                    >Ficha del grupo:</label
+                                >
+                                <input
+                                    class="form-control mr-sm-2 flex-grow-1"
+                                    type="text"
+                                    placeholder="Ficha"
+                                    th:field="*{ficha}"
+                                />
                             </div>
                             <div class="input-group mb-3 mb-lg-0">
-                                <label for="search2" class="input-group-text me-2">Documento de identidad:</label>
-                                <input class="form-control mr-sm-2 flex-grow-1" type="text" placeholder="Documento"
-                                    aria-label="Buscar" id="search2" th:field="*{id}">
+                                <label
+                                    for="search2"
+                                    class="input-group-text me-2"
+                                    >Documento de identidad:</label
+                                >
+                                <input
+                                    class="form-control mr-sm-2 flex-grow-1"
+                                    type="text"
+                                    placeholder="Documento"
+                                    aria-label="Buscar"
+                                    id="search2"
+                                    th:field="*{id}"
+                                />
                             </div>
-                            <button class="btn btn-success  mt-3 mt-lg-0" type="submit">Buscar</button>
-                    </form>
+                            <button
+                                class="btn btn-success mt-3 mt-lg-0"
+                                type="submit"
+                            >
+                                Buscar
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="table-success text-center">
+                        <tr>
+                            <th scope="col">Documento</th>
+                            <th scope="col">Ficha</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Correo electronico</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr th:each="aprendiz : ${aprendices}">
+                            <th scope="row" th:text="${aprendiz.id}"></th>
+                            <td th:text="${aprendiz.ficha}"></td>
+                            <td
+                                th:text="${aprendiz.nombre} + ' ' + ${aprendiz.apellido}"
+                            ></td>
+                            <td th:text="${aprendiz.correoElectronico}"></td>
+                            <td th:text="${aprendiz.celular}"></td>
+                            <td
+                                class="d-flex flex-column flex-sm-row gap-2 justify-content-center align-items-center"
+                            >
+                                <a
+                                    th:href="@{/aprendices/delete/{id} (id=${aprendiz.id})}"
+                                >
+                                    <button class="btn btn-danger confirmar">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="currentColor"
+                                            class="bi bi-trash3"
+                                            viewBox="0 0 16 16"
+                                        >
+                                            <path
+                                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
+                                            />
+                                        </svg>
+                                    </button>
+                                </a>
+                                <a
+                                    th:href="@{/aprendices/edit/{id} (id=${aprendiz.id})}"
+                                >
+                                    <button class="btn btn-primary">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="currentColor"
+                                            class="bi bi-pencil-fill"
+                                            viewBox="0 0 16 16"
+                                        >
+                                            <path
+                                                d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"
+                                            />
+                                        </svg>
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <nav
+                th:if="${aprendices.totalPages > 0}"
+                aria-label="Page navigation example"
+            >
+                <ul class="pagination justify-content-center">
+                    <li
+                        class="page-item"
+                        th:classappend="${aprendices.number == 0 ? 'disabled' : ''}"
+                    >
+                        <a
+                            th:href="@{/aprendices/view(page=${aprendices.number - 1})}"
+                            class="page-link"
+                            >Anterior</a
+                        >
+                    </li>
+
+                    <li
+                        class="page-item"
+                        th:classappend="${i eq aprendices.number + 1} ? 'active'"
+                        th:each="i : ${#numbers.sequence( 1, aprendices.totalPages, 1)}"
+                    >
+                        <a
+                            class="page-link"
+                            th:href="@{/aprendices/view?page={id}(id=${i -1})}"
+                            th:text="${i}"
+                            th:title="${'Page '+ i}"
+                            data-toggle="tooltip"
+                        ></a>
+                    </li>
+
+                    <li
+                        class="page-item"
+                        th:classappend="${aprendices.number == (aprendices.totalPages - 1) ? 'disabled' : ''}"
+                    >
+                        <a
+                            th:href="@{/aprendices/view(page=${aprendices.number + 1})}"
+                            class="page-link"
+                            >Siguiente</a
+                        >
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered">
-                <thead class="table-success text-center">
-                    <tr>
-                        <th scope="col">Documento</th>
-                        <th scope="col">Ficha</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Correo electronico</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    <tr th:each="aprendiz : ${aprendices}">
-                        <th scope="row" th:text="${aprendiz.id}"></th>
-                        <td th:text="${aprendiz.ficha}"></td>
-                        <td th:text="${aprendiz.nombre} + ' ' + ${aprendiz.apellido}"></td>
-                        <td th:text="${aprendiz.correoElectronico}"></td>
-                        <td th:text="${aprendiz.celular}"></td>
-                        <td class=" d-flex flex-column flex-sm-row gap-2 justify-content-center align-items-center">
-                            <a th:href="@{/aprendices/delete/{id} (id=${aprendiz.id})}">
-                                <button class="btn btn-danger confirmar">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path
-                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                                    </svg>
-                                </button>
-                            </a>
-                            <a th:href="@{/aprendices/edit/{id} (id=${aprendiz.id})}">
-                                <button class="btn btn-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                        <path
-                                            d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                    </svg>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <nav th:if="${aprendices.totalPages > 0}" aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${aprendices.number == 0 ? 'disabled' : ''}">
-                    <a th:href="@{/aprendices/view(page=${aprendices.number - 1})}" class="page-link">Anterior</a>
-                </li>
-
-                <li class="page-item" th:classappend="${i eq aprendices.number + 1} ? 'active'"
-                    th:each="i : ${#numbers.sequence( 1, aprendices.totalPages, 1)}">
-                    <a class="page-link" th:href="@{/aprendices/view?page={id}(id=${i -1})}" th:text="${i}"
-                        th:title="${'Page '+ i}" data-toggle="tooltip"></a>
-                </li>
-
-                <li class="page-item"
-                    th:classappend="${aprendices.number == (aprendices.totalPages - 1) ? 'disabled' : ''}">
-                    <a th:href="@{/aprendices/view(page=${aprendices.number + 1})}" class="page-link">Siguiente</a>
-                </li>
-            </ul>
-        </nav>
-
-    </div>
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script>
-        document.querySelectorAll('.confirmar').forEach((elemento) => {
-        elemento.addEventListener('click', (evento) => {
-            if (!confirm('¿Estás seguro de que deseas eliminar este elemento?')) {
-            evento.preventDefault();
-            }
-        }, false);
-        });
-    </script>
-</body>
-
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        ></script>
+        <script>
+            document.querySelectorAll('.confirmar').forEach((elemento) => {
+            elemento.addEventListener('click', (evento) => {
+                if (!confirm('¿Estás seguro de que deseas eliminar este elemento?')) {
+                    evento.preventDefault();
+                }
+            }, false);
+            });
+        </script>
+    </body>
 </html>
